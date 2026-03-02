@@ -1,122 +1,88 @@
 // backend/routes/judge.js
+// Uses Piston API — completely free, no API key, no signup
+// https://github.com/engineer-man/piston
+
 const express = require("express");
 const { protect } = require("../middleware/auth");
 
 const router = express.Router();
 router.use(protect);
 
-const JUDGE0_BASE = "https://judge0-ce.p.rapidapi.com";
+const PISTON_URL = "https://emkc.org/api/v2/piston/execute";
 
-// ─── POST /api/judge/run ──────────────────────────────────────────────────────
-// Body: { code, languageId, language }
+const LANG_VERSIONS = {
+  python:     { language: "python",     version: "3.10.0",  filename: "solution.py"  },
+  java:       { language: "java",       version: "15.0.2",  filename: "Main.java"    },
+  cpp:        { language: "cpp",        version: "10.2.0",  filename: "solution.cpp" },
+  javascript: { language: "javascript", version: "18.15.0", filename: "solution.js"  },
+};
+
+// POST /api/judge/run
+// Body: { code, language }
 router.post("/run", async (req, res) => {
-  const { code, languageId } = req.body;
+  const { code, language } = req.body;
 
-  if (!code || !languageId) {
-    return res.status(400).json({ error: "code and languageId are required" });
+  if (!code || !language) {
+    return res.status(400).json({ error: "code and language are required" });
   }
 
-  const apiKey = process.env.JUDGE0_API_KEY;
-
-  // ── No API key: return a helpful error ──────────────────────────────────────
-  if (!apiKey || apiKey === "your_judge0_api_key_here") {
-    return res.status(503).json({
-      error: "JUDGE0_NOT_CONFIGURED",
-      message: "Judge0 API key not set. Add JUDGE0_API_KEY to your backend .env file. Get a free key at https://rapidapi.com/judge0-official/api/judge0-ce",
-      useFallback: true,
-    });
+  const langConfig = LANG_VERSIONS[language];
+  if (!langConfig) {
+    return res.status(400).json({ error: `Unsupported language: ${language}` });
   }
 
   try {
-    // Step 1: Submit code
-    const submitRes = await fetch(`${JUDGE0_BASE}/submissions?base64_encoded=false&wait=false`, {
+    const response = await fetch(PISTON_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-RapidAPI-Key": apiKey,
-        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        source_code: code,
-        language_id: languageId,
-        stdin: "",
-        cpu_time_limit: 5,
-        memory_limit: 128000,
+        language: langConfig.language,
+        version:  langConfig.version,
+        files: [
+          {
+            name:    langConfig.filename,
+            content: code,
+          },
+        ],
+        stdin:           "",
+        args:            [],
+        compile_timeout: 10000,
+        run_timeout:     5000,
+        compile_memory_limit: -1,
+        run_memory_limit:     -1,
       }),
     });
 
-    if (!submitRes.ok) {
-      const errText = await submitRes.text();
-      return res.status(500).json({ error: `Judge0 submission failed: ${errText}` });
+    if (!response.ok) {
+      const errText = await response.text();
+      return res.status(500).json({ error: `Piston error: ${errText}` });
     }
 
-    const { token } = await submitRes.json();
-    if (!token) return res.status(500).json({ error: "No token from Judge0" });
+    const data = await response.json();
 
-    // Step 2: Poll for result (max 10 attempts, 1s apart)
-    let result = null;
-    for (let i = 0; i < 10; i++) {
-      await sleep(1000);
-      const pollRes = await fetch(
-        `${JUDGE0_BASE}/submissions/${token}?base64_encoded=false`,
-        {
-          headers: {
-            "X-RapidAPI-Key": apiKey,
-            "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-          },
-        }
-      );
-      const pollData = await pollRes.json();
-      // Status IDs: 1=In Queue, 2=Processing, 3+=Done
-      if (pollData.status?.id >= 3) {
-        result = pollData;
-        break;
-      }
-    }
-
-    if (!result) {
-      return res.status(408).json({ error: "Judge0 timed out waiting for result" });
-    }
-
-    // Status 3 = Accepted, others = various errors
     res.json({
-      stdout:   result.stdout  || "",
-      stderr:   result.stderr  || result.compile_output || "",
-      status:   result.status?.description || "Unknown",
-      statusId: result.status?.id,
-      time:     result.time,
-      memory:   result.memory,
+      stdout:  data.run?.stdout  || "",
+      stderr:  data.run?.stderr  || data.compile?.stderr || "",
+      status:  data.run?.code === 0 ? "Accepted" : "Error",
+      code:    data.run?.code,
+      signal:  data.run?.signal,
     });
 
   } catch (err) {
-    console.error("Judge0 error:", err.message);
+    console.error("Piston error:", err.message);
     res.status(500).json({ error: err.message, useFallback: true });
   }
 });
 
-// ─── GET /api/judge/languages ─────────────────────────────────────────────────
-// Returns supported language list from Judge0
-router.get("/languages", async (req, res) => {
-  const apiKey = process.env.JUDGE0_API_KEY;
-  if (!apiKey || apiKey === "your_judge0_api_key_here") {
-    return res.json({ configured: false, message: "Judge0 not configured" });
-  }
+// GET /api/judge/runtimes — lists all available Piston runtimes
+router.get("/runtimes", async (req, res) => {
   try {
-    const r = await fetch(`${JUDGE0_BASE}/languages`, {
-      headers: {
-        "X-RapidAPI-Key": apiKey,
-        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-      },
-    });
+    const r = await fetch("https://emkc.org/api/v2/piston/runtimes");
     const data = await r.json();
-    res.json({ configured: true, languages: data });
+    res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 module.exports = router;

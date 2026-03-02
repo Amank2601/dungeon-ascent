@@ -29,6 +29,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/puzzles", puzzleRoutes);
 app.use("/api/validate", validateRoutes);
+const pistonRoutes = require("./routes/piston");
+app.use("/api/piston", pistonRoutes);
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
 app.get("/api/health", (req, res) => {
@@ -54,3 +56,4 @@ mongoose
     console.error("❌ MongoDB connection failed:", err.message);
     process.exit(1);
   });
+
