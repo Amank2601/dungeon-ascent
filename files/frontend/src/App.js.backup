@@ -63,16 +63,14 @@ function GlobalStyles() {
 const initProgress = () => ({ worlds: {}, totalXP: 0, introDone: false });
 
 const markFloor = (p, wid, fid) => {
-  const worlds = p.worlds || {};
-  const w = { ...(worlds[wid] || { completedFloors: [], bossDefeated: false }) };
+  const w = { ...(p.worlds[wid] || { completedFloors: [], bossDefeated: false }) };
   if (!w.completedFloors.includes(fid)) w.completedFloors = [...w.completedFloors, fid];
-  return { ...p, worlds: { ...worlds, [wid]: w }, totalXP: (p.totalXP || 0) + 100 };
+  return { ...p, worlds: { ...p.worlds, [wid]: w }, totalXP: (p.totalXP || 0) + 100 };
 };
 
 const markBoss = (p, wid) => {
-  const worlds = p.worlds || {};
-  const w = { ...(worlds[wid] || { completedFloors: [], bossDefeated: false }), bossDefeated: true };
-  return { ...p, worlds: { ...worlds, [wid]: w }, totalXP: (p.totalXP || 0) + 500 };
+  const w = { ...(p.worlds[wid] || { completedFloors: [], bossDefeated: false }), bossDefeated: true };
+  return { ...p, worlds: { ...p.worlds, [wid]: w }, totalXP: (p.totalXP || 0) + 500 };
 };
 
 // ─── TOP BAR ──────────────────────────────────────────────────────────────────
@@ -369,8 +367,6 @@ function Game() {
     apiFetch("/progress")
       .then((data) => {
         const p = data.progress || initProgress();
-        // Guard: ensure worlds always exists
-        if (!p.worlds) p.worlds = {};
         setProgress(p);
         if (p.introDone) setScene("worldmap");
         // sync selected language

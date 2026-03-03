@@ -7,7 +7,9 @@ require("dotenv").config();
 
 const authRoutes     = require("./routes/auth");
 const progressRoutes = require("./routes/progress");
-const pistonRoutes   = require("./routes/piston");
+const pistonRoutes      = require("./routes/piston");
+const leaderboardRoutes = require("./routes/leaderboard");
+const dailyRoutes       = require("./routes/daily");
 
 const app = express();
 
@@ -47,7 +49,9 @@ app.use("/api/auth/register", authLimiter);
 // ─── Routes ──────────────────────────────────────────────────────────────────
 app.use("/api/auth",     authRoutes);
 app.use("/api/progress", progressRoutes);
-app.use("/api/piston",   pistonRoutes);
+app.use("/api/piston",      pistonRoutes);
+app.use("/api/leaderboard", leaderboardRoutes);
+app.use("/api/daily",       dailyRoutes);
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
 app.get("/api/health", (req, res) => {

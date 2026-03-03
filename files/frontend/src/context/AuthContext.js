@@ -56,13 +56,19 @@ export function AuthProvider({ children }) {
     return data;
   };
 
+  // Used by Google OAuth — token already obtained from backend
+  const loginWithToken = (token, userData) => {
+    localStorage.setItem("dungeon_token", token);
+    setUser(userData);
+  };
+
   const logout = () => {
     localStorage.removeItem("dungeon_token");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loginWithToken, loading }}>
       {children}
     </AuthContext.Provider>
   );
