@@ -1,95 +1,82 @@
+// backend/routes/progress.js
 const express = require("express");
 const Progress = require("../models/Progress");
 const { protect } = require("../middleware/auth");
 
 const router = express.Router();
+router.use(protect); // all routes require login
 
-// All progress routes require authentication
-router.use(protect);
-
-// ─── GET /api/progress ───────────────────────────────────────────────────────
+// ─── GET /api/progress ────────────────────────────────────────────────────────
+// Load player's saved progress from MongoDB
 router.get("/", async (req, res) => {
   try {
-    let progress = await Progress.findOne({ user: req.user._id });
-    if (!progress) {
-      progress = await Progress.create({ user: req.user._id });
+    let record = await Progress.findOne({ user: req.user._id });
+
+    // Safety net — create if missing (shouldn't happen after register)
+    if (!record) {
+      record = await Progress.create({
+        user: req.user._id,
+        data: {
+          worlds: {},
+          totalXP: 0,
+          introDone: false,
+          selectedLanguage: "javascript",
+        },
+      });
     }
-    res.json({ progress });
+
+    res.json({ progress: record.data });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Get progress error:", err.message);
+    res.status(500).json({ error: "Failed to load progress" });
   }
 });
 
-// ─── PATCH /api/progress/floor ───────────────────────────────────────────────
-router.patch("/floor", async (req, res) => {
+// ─── POST /api/progress ───────────────────────────────────────────────────────
+// Save (overwrite) full progress to MongoDB
+// Body: { progress: { worlds: {...}, totalXP: 500, introDone: true, selectedLanguage: "python" } }
+router.post("/", async (req, res) => {
   try {
-    const { floorDefeated } = req.body;
-    if (typeof floorDefeated !== "number" || floorDefeated < -5 || floorDefeated > -1) {
-      return res.status(400).json({ error: "Invalid floor number." });
+    const { progress } = req.body;
+
+    if (!progress || typeof progress !== "object") {
+      return res.status(400).json({ error: "Invalid progress data" });
     }
 
-    const progress = await Progress.findOne({ user: req.user._id });
-    if (!progress) return res.status(404).json({ error: "Progress not found." });
-
-    if (progress.currentFloor !== floorDefeated) {
-      return res.status(400).json({ error: "Floor mismatch. Cannot skip floors." });
-    }
-
-    const floorRecord = progress.getFloor(floorDefeated);
-    floorRecord.monsterDefeated = true;
-    floorRecord.defeatedAt = new Date();
-
-    if (floorDefeated === -1) {
-      progress.currentFloor = 0;
-      progress.gameCompleted = true;
-      progress.gameCompletedAt = new Date();
-    } else {
-      progress.currentFloor = floorDefeated + 1;
-    }
-
-    await progress.save();
-    res.json({
-      message: progress.gameCompleted ? "🏆 You escaped the dungeon!" : `Floor ${floorDefeated + 1} unlocked!`,
-      progress,
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ─── POST /api/progress/attempt ──────────────────────────────────────────────
-router.post("/attempt", async (req, res) => {
-  try {
-    const { puzzleId, code, passed } = req.body;
-    if (!puzzleId || !code || typeof passed !== "boolean") {
-      return res.status(400).json({ error: "puzzleId, code, and passed are required." });
-    }
-
-    const progress = await Progress.findOne({ user: req.user._id });
-    if (!progress) return res.status(404).json({ error: "Progress not found." });
-
-    const floorRecord = progress.getFloor(progress.currentFloor);
-    floorRecord.attempts.push({ puzzleId, code, passed });
-    progress.totalAttempts += 1;
-    await progress.save();
-
-    res.json({ message: "Attempt logged.", totalAttempts: progress.totalAttempts });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ─── DELETE /api/progress/reset ──────────────────────────────────────────────
-router.delete("/reset", async (req, res) => {
-  try {
-    await Progress.findOneAndReplace(
+    const updated = await Progress.findOneAndUpdate(
       { user: req.user._id },
-      { user: req.user._id, currentFloor: -5, gameCompleted: false, floors: [], totalAttempts: 0, startedAt: new Date() },
-      { upsert: true, new: true }
+      { $set: { data: progress } },
+      { new: true, upsert: true, runValidators: false }
     );
-    res.json({ message: "Progress reset. You've been pushed back to Floor -5." });
+
+    res.json({ progress: updated.data, savedAt: updated.updatedAt });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Save progress error:", err.message);
+    res.status(500).json({ error: "Failed to save progress" });
+  }
+});
+
+// ─── DELETE /api/progress ─────────────────────────────────────────────────────
+// Reset progress (Play Again)
+router.delete("/", async (req, res) => {
+  try {
+    const reset = {
+      worlds: {},
+      totalXP: 0,
+      introDone: false,
+      selectedLanguage: "javascript",
+    };
+
+    await Progress.findOneAndUpdate(
+      { user: req.user._id },
+      { $set: { data: reset } },
+      { upsert: true }
+    );
+
+    res.json({ progress: reset });
+  } catch (err) {
+    console.error("Reset progress error:", err.message);
+    res.status(500).json({ error: "Failed to reset progress" });
   }
 });
 

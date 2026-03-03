@@ -1,18 +1,16 @@
+// backend/models/Progress.js
 const mongoose = require("mongoose");
 
-const attemptSchema = new mongoose.Schema({
-  puzzleId: { type: String, required: true },
-  code: { type: String, required: true },
-  passed: { type: Boolean, required: true },
-  attemptedAt: { type: Date, default: Date.now },
-});
-
-const floorSchema = new mongoose.Schema({
-  floor: { type: Number, required: true },           // e.g. -5, -4 ... -1
-  monsterDefeated: { type: Boolean, default: false },
-  defeatedAt: { type: Date },
-  attempts: [attemptSchema],
-});
+// Mirrors the frontend progress state exactly:
+// {
+//   worlds: {
+//     w1: { completedFloors: ["w1f1", "w1f2"], bossDefeated: false },
+//     w2: { completedFloors: [], bossDefeated: false },
+//   },
+//   totalXP: 600,
+//   introDone: true,
+//   selectedLanguage: "python"
+// }
 
 const progressSchema = new mongoose.Schema(
   {
@@ -20,26 +18,19 @@ const progressSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true,
+      unique: true, // one progress document per user
     },
-    currentFloor: { type: Number, default: -5 },
-    gameCompleted: { type: Boolean, default: false },
-    gameCompletedAt: { type: Date },
-    totalAttempts: { type: Number, default: 0 },
-    floors: [floorSchema],
-    startedAt: { type: Date, default: Date.now },
+    data: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {
+        worlds: {},
+        totalXP: 0,
+        introDone: false,
+        selectedLanguage: "javascript",
+      },
+    },
   },
   { timestamps: true }
 );
-
-// Helper: get or create a floor record
-progressSchema.methods.getFloor = function (floorNum) {
-  let f = this.floors.find((f) => f.floor === floorNum);
-  if (!f) {
-    this.floors.push({ floor: floorNum });
-    f = this.floors[this.floors.length - 1];
-  }
-  return f;
-};
 
 module.exports = mongoose.model("Progress", progressSchema);

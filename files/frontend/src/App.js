@@ -87,18 +87,45 @@ function TopBar({ progress, onMap, user }) {
 }
 
 // ─── WORLD MAP ────────────────────────────────────────────────────────────────
-function WorldMap({ progress, onSelectWorld }) {
+function WorldMap({ progress, onSelectWorld, selectedLanguage, onLanguageChange }) {
+  const LANG_OPTIONS = [
+    { id: "javascript", name: "JavaScript", emoji: "🟨", color: "#f7df1e" },
+    { id: "python",     name: "Python",     emoji: "🐍", color: "#3776ab" },
+    { id: "java",       name: "Java",       emoji: "☕", color: "#ed8b00" },
+    { id: "cpp",        name: "C++",        emoji: "⚡", color: "#00599c" },
+  ];
   return (
     <div style={ui.page}>
       <div style={ui.mapTitle}>⚔️ WORLD MAP</div>
       <div style={ui.mapSub}>
         Betrayed at the top. Stranded at the bottom. Climb back — one world at a time.
       </div>
+      {/* Language selector */}
+      <div style={{ display:"flex", gap:"0.5rem", justifyContent:"center", marginBottom:"1.5rem", flexWrap:"wrap" }}>
+        <span style={{ color:"#444", fontSize:"0.78rem", alignSelf:"center", marginRight:"0.25rem" }}>Your language:</span>
+        {LANG_OPTIONS.map(lang => (
+          <button key={lang.id}
+            onClick={() => onLanguageChange(lang.id)}
+            style={{
+              border: "1px solid",
+              borderColor: selectedLanguage === lang.id ? lang.color : "#1a1a2a",
+              color: selectedLanguage === lang.id ? lang.color : "#444",
+              background: selectedLanguage === lang.id ? `${lang.color}18` : "transparent",
+              padding: "0.35rem 0.85rem", borderRadius: "20px",
+              fontSize: "0.82rem", cursor: "pointer",
+              fontFamily: "'JetBrains Mono',monospace", transition: "all 0.2s",
+              fontWeight: selectedLanguage === lang.id ? "bold" : "normal",
+            }}>
+            {lang.emoji} {lang.name}
+          </button>
+        ))}
+      </div>
       <div style={ui.worldGrid}>
         {WORLDS.map((world, wi) => {
           const wp = progress.worlds?.[world.id] || {};
           const completed = wp.completedFloors?.length || 0;
-          const total = world.floors.length;
+          const visibleFloors = world.floors.filter(f => !f.languages || f.languages.includes(selectedLanguage));
+          const total = visibleFloors.length;
           const pct = Math.round((completed / total) * 100);
           const bossDefeated = wp.bossDefeated || false;
           const locked = wi > 0 && !progress.worlds?.[WORLDS[wi - 1].id]?.bossDefeated;
@@ -132,11 +159,13 @@ function WorldMap({ progress, onSelectWorld }) {
 }
 
 // ─── FLOOR MAP ────────────────────────────────────────────────────────────────
-function FloorMap({ world, progress, onSelectFloor, onBack }) {
+function FloorMap({ world, progress, onSelectFloor, onBack, selectedLanguage = "javascript" }) {
   const wp = progress.worlds?.[world.id] || {};
   const done = wp.completedFloors || [];
   const bossDefeated = wp.bossDefeated || false;
-  const allDone = done.length === world.floors.length;
+  // Filter floors to only show those available for selected language
+  const visibleFloors = world.floors.filter(f => !f.languages || f.languages.includes(selectedLanguage));
+  const allDone = visibleFloors.every(f => done.includes(f.id));
   const monsterList = MONSTERS[world.id] || [];
   const bossMonster = MONSTERS[`${world.id}boss`];
 
@@ -167,9 +196,9 @@ function FloorMap({ world, progress, onSelectFloor, onBack }) {
       )}
 
       <div style={ui.floorList}>
-        {world.floors.map((floor, fi) => {
+        {visibleFloors.map((floor, fi) => {
           const floorDone = done.includes(floor.id);
-          const prevDone = fi === 0 || done.includes(world.floors[fi - 1].id);
+          const prevDone = fi === 0 || done.includes(visibleFloors[fi - 1].id);
           const locked = !prevDone;
           const monster = monsterList[fi] || monsterList[monsterList.length - 1];
 
@@ -294,6 +323,14 @@ function Game() {
   const [selectedMonster, setSelectedMonster] = useState(null);
   const [isBossFight, setIsBossFight] = useState(false);
   const [showBetrayerReveal, setShowBetrayerReveal] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    // persist language choice
+    return localStorage.getItem("dungeon_language") || "javascript";
+  });
+  const handleLanguageChange = (lang) => {
+    setSelectedLanguage(lang);
+    localStorage.setItem("dungeon_language", lang);
+  };
 
   // Load progress from localStorage (keyed by user)
   useEffect(() => {
@@ -389,6 +426,8 @@ function Game() {
         {scene === "worldmap" && (
           <WorldMap
             progress={progress}
+            selectedLanguage={selectedLanguage}
+            onLanguageChange={handleLanguageChange}
             onSelectWorld={w => { setSelectedWorld(w); setScene("floormap"); }}
           />
         )}
@@ -397,6 +436,7 @@ function Game() {
           <FloorMap
             world={selectedWorld}
             progress={progress}
+            selectedLanguage={selectedLanguage}
             onSelectFloor={handleSelectFloor}
             onBack={() => setScene("worldmap")}
           />
@@ -408,6 +448,7 @@ function Game() {
             world={selectedWorld}
             floor={selectedFloor}
             monster={selectedMonster}
+            initialLang={selectedLanguage}
             onVictory={handleBattleVictory}
             onDefeat={handleBattleDefeat}
             onBack={() => setScene("floormap")}

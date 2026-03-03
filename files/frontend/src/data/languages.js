@@ -26,7 +26,7 @@ export const LANGUAGES = {
     id: "cpp", name: "C++", emoji: "⚡",
     color: "#00599c", monoColor: "#a78bfa", comment: "//",
     note: "✅ Runs via Piston (free)",
-    pistonLang: "c++", pistonVersion: "10.2.0",
+    pistonLang: "cpp", pistonVersion: "10.2.0",  // "cpp" not "c++" for Piston Docker
   },
 };
 

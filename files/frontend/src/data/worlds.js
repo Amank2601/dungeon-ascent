@@ -24,8 +24,11 @@ export const WORLDS = [
       // Floor 1 — What is programming / print
       {
         id: "w1f1",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 1,
         title: "Your First Line of Code",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f1",
         type: "lesson",
         lesson: `Programming is giving step-by-step instructions to a computer.
@@ -61,8 +64,11 @@ C++:        cout << "Hello, World!";`,
       // Floor 2 — Comments
       {
         id: "w1f2",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 2,
         title: "Comments — Notes for Humans",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f2",
         type: "lesson",
         lesson: `Comments are notes in your code that the computer ignores.
@@ -98,8 +104,11 @@ Then print: "Comments are invisible to computers"`,
       // Floor 3 — Variables (storing data)
       {
         id: "w1f3",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 3,
         title: "Variables — Boxes That Store Data",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f3",
         type: "lesson",
         lesson: `A variable is like a labelled box that stores a value.
@@ -150,8 +159,11 @@ Python: name = "Warrior" then level = 1`,
       // Floor 4 — Data Types
       {
         id: "w1f4",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 4,
         title: "Data Types — What Kind of Data?",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f4",
         type: "lesson",
         lesson: `Data comes in different types:
@@ -203,8 +215,11 @@ Print all four.`,
       // Floor 5 — Basic Math operators
       {
         id: "w1f5",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 5,
         title: "Basic Math — Let the Computer Calculate",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f5",
         type: "lesson",
         lesson: `Computers are calculators. Math operators:
@@ -254,8 +269,11 @@ Then calculate and print:
       // Floor 6 — String concatenation
       {
         id: "w1f6",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 6,
         title: "String Joining — Combine Text",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f6",
         type: "lesson",
         lesson: `You can join strings together — called concatenation.
@@ -300,8 +318,11 @@ Python: print(firstName + " " + lastName)  or  print(f"{firstName} {lastName}")`
       // Floor 7 — If / Else
       {
         id: "w1f7",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 7,
         title: "If / Else — Making Decisions",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f7",
         type: "lesson",
         lesson: `if/else lets your code make decisions based on conditions.
@@ -351,8 +372,11 @@ if score >= 60: in Python`,
       // Floor 8 — Else if / elif
       {
         id: "w1f8",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 8,
         title: "Else-If — Multiple Conditions",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f8",
         type: "lesson",
         lesson: `When you have MORE than two options, use else-if (or elif in Python).
@@ -410,8 +434,11 @@ Python:
       // Floor 9 — Comparison operators
       {
         id: "w1f9",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 9,
         title: "Comparisons — True or False?",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f9",
         type: "lesson",
         lesson: `Comparison operators return true or false:
@@ -460,8 +487,11 @@ Print the result of these comparisons:
       // Floor 10 — Logical operators
       {
         id: "w1f10",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 10,
         title: "Logical Operators — AND, OR, NOT",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f10",
         type: "lesson",
         lesson: `Combine multiple conditions with logical operators:
@@ -507,8 +537,11 @@ Python: if age >= 18 and has_ticket:`,
       // Floor 11 — Mini challenge combining all W1 knowledge
       {
         id: "w1f11",
+        
+        languages: ["javascript","python","java","cpp"],
         floorNum: 11,
         title: "The Dungeon Entry Check",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f11",
         type: "lesson",
         lesson: `Time to combine EVERYTHING you've learned:
@@ -640,6 +673,7 @@ Finally:
     floors: [
       {
         id: "w2f1", floorNum: 1, title: "What is a Loop?",
+        languages: ["javascript","python","java","cpp"],
         concept: "w2f1", type: "code",
         lesson: "Loops repeat code. Without loops: print 100 lines by hand. With loops: 3 lines of code.",
         challenge: "Write a loop that prints numbers 1 to 5, each on a new line.\n\nExpected output:\n1\n2\n3\n4\n5",
@@ -651,8 +685,8 @@ Finally:
           java: `for (int i = 1; i <= 5; i++) {\n    System.out.println(i);\n}`,
           cpp: `for (int i = 1; i <= 5; i++) {\n    cout << i << endl;\n}`,
         },
-        functionName: "sumTo",
-        testCases: [{ label: "sumTo(5)", input: 5, expected: 15 }, { label: "sumTo(10)", input: 10, expected: 55 }],
+        functionName: null,
+        testCases: [],
         testDisplay: [`Print numbers 1 through 5`, `Each on a new line`],
         validate: (code) => {
           const c = code.toLowerCase();
@@ -660,8 +694,58 @@ Finally:
                  (c.includes('print') || c.includes('console.log') || c.includes('cout') || c.includes('system.out'));
         },
       },
+
+      // Floor 1b — Bridge: accumulator pattern BEFORE introducing functions
       {
-        id: "w2f2", floorNum: 2, title: "Sum of Numbers",
+        id: "w2f1b", floorNum: 2, title: "Loop & Accumulate",
+        languages: ["javascript","python","java","cpp"],
+        concept: "w2f1b", type: "lesson",
+        lesson: `A very common loop pattern: start with 0, add to it each iteration.
+This is called an "accumulator" — it collects results as the loop runs.
+
+JavaScript:
+  let total = 0;
+  for (let i = 1; i <= 5; i++) {
+    total += i;
+  }
+  console.log(total); // 15
+
+Python:
+  total = 0
+  for i in range(1, 6):
+      total += i
+  print(total)   # 15
+
+Next floor: wrap this in a function so it works for ANY number!`,
+        challenge: `Without writing a function yet, use a loop to:
+1. Create variable: total = 0
+2. Loop from 1 to 10
+3. Add each number to total inside the loop
+4. Print total after the loop
+
+Expected output: 55`,
+        hint: `JS: let total = 0; for(let i=1; i<=10; i++) { total += i; } console.log(total);`,
+        starterCode: `// Create total = 0\n// Loop 1 to 10 and accumulate\n// Print total\n`,
+        starterCodes: {
+          javascript: `let total = 0;\nfor (let i = 1; i <= 10; i++) {\n  total += i;\n}\nconsole.log(total);`,
+          python: `total = 0\nfor i in range(1, 11):\n    total += i\nprint(total)`,
+          java: `int total = 0;\nfor (int i = 1; i <= 10; i++) {\n    total += i;\n}\nSystem.out.println(total);`,
+          cpp: `int total = 0;\nfor (int i = 1; i <= 10; i++) {\n    total += i;\n}\ncout << total << endl;`,
+        },
+        functionName: null,
+        testCases: [],
+        testDisplay: [`Loop 1 to 10, accumulate total`, `Print total → 55`],
+        validate: (code) => {
+          const c = code.toLowerCase();
+          return (c.includes('for') || c.includes('while')) &&
+                 c.includes('10') &&
+                 (c.includes('+=') || (c.includes('total') && c.includes('+'))) &&
+                 (c.includes('print') || c.includes('console.log') || c.includes('cout') || c.includes('system.out'));
+        },
+      },
+      {
+        id: "w2f2", floorNum: 3, title: "Sum of Numbers",
+        languages: ["javascript","python","java","cpp"],
         concept: "w2f2", type: "code",
         lesson: "Accumulate values in a loop — one of the most used patterns in programming.",
         challenge: "Write a function `sumTo(n)` that returns the sum of all integers from 1 to n.",
@@ -689,6 +773,7 @@ Finally:
       },
       {
         id: "w2f3", floorNum: 3, title: "Even Numbers",
+        languages: ["javascript","python","java","cpp"],
         concept: "w2f3", type: "code",
         lesson: "Filter inside loops using if + modulo (%). Even numbers have remainder 0 when divided by 2.",
         challenge: "Write `sumEvens(n)` — returns the sum of all even numbers from 1 to n.",
@@ -715,6 +800,7 @@ Finally:
       },
       {
         id: "w2f4", floorNum: 4, title: "Multiplication Table",
+        languages: ["javascript","python","java","cpp"],
         concept: "w2f4", type: "code",
         lesson: "Loops can build collections. Push results into an array as you go.",
         challenge: "Write `multiTable(n)` — returns an array of n's multiplication table from 1 to 10.",
@@ -738,6 +824,7 @@ Finally:
       },
       {
         id: "w2f5", floorNum: 5, title: "Count Vowels",
+        languages: ["javascript","python","java","cpp"],
         concept: "w2f5", type: "code",
         lesson: "Loop through each character of a string. Check each one with if.",
         challenge: "Write `countVowels(str)` that returns the number of vowels (a,e,i,o,u) in the string (case-insensitive).",
@@ -765,6 +852,7 @@ Finally:
       },
       {
         id: "w2f6", floorNum: 6, title: "While Loop",
+        languages: ["javascript","python","java","cpp"],
         concept: "w2f6", type: "code",
         lesson: "while loops repeat as long as a condition is true. Great when you don't know how many times to loop.",
         challenge: "Write `countDown(n)` that returns an array counting down from n to 1 using a while loop.",
@@ -792,6 +880,7 @@ Finally:
       },
       {
         id: "w2f7", floorNum: 7, title: "Pattern Printing",
+        languages: ["javascript","python","java","cpp"],
         concept: "w2f7", type: "code",
         lesson: "Classic loop challenge: use loops to build patterns. Each row has more stars.",
         challenge: "Write `triangle(n)` that returns an array of n strings forming a star triangle.\nRow 1: '*'\nRow 2: '**'\nRow 3: '***'",
@@ -865,6 +954,7 @@ Finally:
     floors: [
       {
         id: "w3f1", floorNum: 1, title: "What is a Function?",
+        languages: ["javascript","python","java","cpp"],
         concept: "w3f1", type: "code",
         lesson: `A function is a reusable block of code. 
 You define it once, call it many times.
@@ -897,6 +987,7 @@ Python:  def add(a, b): return a + b`,
       },
       {
         id: "w3f2", floorNum: 2, title: "Return Values",
+        languages: ["javascript","python","java","cpp"],
         concept: "w3f2", type: "code",
         lesson: "A function must RETURN its result. Without return, you get undefined. Return ends the function immediately.",
         challenge: "Write `minMax(arr)` that returns an object `{min, max}` with the minimum and maximum values of the array.",
@@ -920,7 +1011,79 @@ Python:  def add(a, b): return a + b`,
         },
       },
       {
-        id: "w3f3", floorNum: 3, title: "isPrime Checker",
+        id: "w3f2b", floorNum: 3, title: "String Methods",
+        languages: ["javascript","python","java","cpp"],
+        concept: "w3f2b", type: "code",
+        lesson: "Strings have powerful built-ins: .toUpperCase(), .toLowerCase(), .trim(), .includes(), .split(), .replace(). Combine them to transform text.",
+        challenge: "Write `formatName(name)` that:\n- Trims whitespace from both ends\n- Capitalizes the first letter\n- Lowercases the rest\n\nformatName(\"  aLICE  \") → \"Alice\"",
+        hint: "name.trim() removes whitespace. Then: s[0].toUpperCase() + s.slice(1).toLowerCase()",
+        starterCode: `function formatName(name) {\n  // trim, capitalize first letter, lowercase rest\n}`,
+        starterCodes: {
+          javascript: `function formatName(name) {\n  let s = name.trim();\n  return s[0].toUpperCase() + s.slice(1).toLowerCase();\n}`,
+          python: `def format_name(name):\n    s = name.strip()\n    return s[0].upper() + s[1:].lower()`,
+          java: `public String formatName(String name) {\n    String s = name.trim();\n    return Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase();\n}`,
+          cpp: `string formatName(string name) {\n    string s = name;\n    while(!s.empty()&&isspace(s.front()))s.erase(s.begin());\n    while(!s.empty()&&isspace(s.back()))s.pop_back();\n    s[0]=toupper(s[0]);\n    for(int i=1;i<(int)s.size();i++) s[i]=tolower(s[i]);\n    return s;\n}`,
+        },
+        functionName: "formatName",
+        testCases: [
+          { label: '"  aLICE  "', input: "  aLICE  ", expected: "Alice" },
+          { label: '"bOB"', input: "bOB", expected: "Bob" },
+          { label: '"  jOHN  "', input: "  jOHN  ", expected: "John" },
+        ],
+        testDisplay: [`formatName("  aLICE  ") → "Alice"`, `formatName("bOB") → "Bob"`],
+        validate: (code) => {
+          try {
+            const fn = new Function(`${code}; return formatName;`)();
+            return fn("  aLICE  ") === "Alice" && fn("bOB") === "Bob" && fn("  jOHN  ") === "John";
+          } catch { return false; }
+        },
+      },
+      {
+        id: "w3f2c", floorNum: 4, title: "Default Parameters",
+        languages: ["javascript","python","java","cpp"],
+        concept: "w3f2c", type: "code",
+        lesson: `Default parameters give a parameter a fallback value when nothing is passed.
+
+JavaScript:
+  function greet(name = "Stranger") {
+    return "Hello, " + name + "!";
+  }
+  greet()        → "Hello, Stranger!"
+  greet("Alex")  → "Hello, Alex!"
+
+Python:
+  def greet(name="Stranger"):
+      return "Hello, " + name + "!"`,
+        challenge: `Write power(base, exp = 2) that returns base to the power of exp.
+If no exp is given, it squares the base.
+
+power(3)     → 9
+power(2, 10) → 1024`,
+        hint: "JS: function power(base, exp = 2) { return Math.pow(base, exp); }",
+        starterCode: `function power(base, exp = 2) {\n  // return base to the power of exp\n}`,
+        starterCodes: {
+          javascript: `function power(base, exp = 2) {\n  return Math.pow(base, exp);\n}`,
+          python: `def power(base, exp=2):\n    return base ** exp`,
+          java: `public double power(double base, double exp) {\n    return Math.pow(base, exp);\n}`,
+          cpp: `#include<cmath>\ndouble power(double base, double exp=2) {\n    return pow(base, exp);\n}`,
+        },
+        functionName: "power",
+        testCases: [
+          { label: "power(3)", input: 3, expected: 9 },
+          { label: "power(2,10)", input: [2, 10], expected: 1024 },
+          { label: "power(5)", input: 5, expected: 25 },
+        ],
+        testDisplay: [`power(3) → 9`, `power(2, 10) → 1024`, `power(5) → 25`],
+        validate: (code) => {
+          try {
+            const fn = new Function(`${code}; return power;`)();
+            return fn(3) === 9 && fn(2, 10) === 1024 && fn(5) === 25;
+          } catch { return false; }
+        },
+      },
+      {
+        id: "w3f3", floorNum: 5, title: "isPrime Checker",
+        languages: ["javascript","python","java","cpp"],
         concept: "w3f4", type: "code",
         lesson: "A prime number is divisible only by 1 and itself. 2,3,5,7,11,13... are primes.",
         challenge: "Write `isPrime(n)` that returns true if n is prime, false otherwise.",
@@ -948,7 +1111,8 @@ Python:  def add(a, b): return a + b`,
         },
       },
       {
-        id: "w3f4", floorNum: 4, title: "Palindrome Checker",
+        id: "w3f4", floorNum: 6, title: "Palindrome Checker",
+        languages: ["javascript","python","java","cpp"],
         concept: "w3f5", type: "code",
         lesson: "A palindrome reads the same forwards and backwards. 'racecar', 'madam', 'level'.",
         challenge: "Write `isPalindrome(str)` — returns true if string is a palindrome (ignore case and spaces).",
@@ -975,7 +1139,8 @@ Python:  def add(a, b): return a + b`,
         },
       },
       {
-        id: "w3f5", floorNum: 5, title: "FizzBuzz — The Classic",
+        id: "w3f5", floorNum: 7, title: "FizzBuzz — The Classic",
+        languages: ["javascript","python","java","cpp"],
         concept: "w1f8", type: "code",
         lesson: "The most famous coding interview question. Combines loops, modulo, and conditions in a function.",
         challenge: "Write `fizzBuzz(n)` — return 'Fizz' if divisible by 3, 'Buzz' if by 5, 'FizzBuzz' if both, else return n as string.",
@@ -1000,6 +1165,192 @@ Python:  def add(a, b): return a + b`,
             const fn = new Function(`${code}; return fizzBuzz;`)();
             return fn(3)==="Fizz" && fn(5)==="Buzz" && fn(15)==="FizzBuzz" && fn(7)==="7";
           } catch { return false; }
+        },
+      },
+
+      // ── JS-only: Closures ──────────────────────────────────────────────────
+      {
+        id: "w3_js1",
+        languages: ["javascript"],
+        floorNum: 99, title: "Closures",
+        concept: "w3_js1", type: "code",
+        lesson: `A closure is a function that remembers variables from its outer scope, even after the outer function has finished running.
+
+function makeCounter() {
+  let count = 0;           // this variable is "closed over"
+  return function() {
+    count++;
+    return count;
+  };
+}
+const counter = makeCounter();
+counter(); // 1
+counter(); // 2  ← count persists between calls!`,
+        challenge: `Write makeCounter(start = 0) that returns an object with:
+- increment() → increases count by 1, returns new value
+- decrement() → decreases count by 1, returns new value
+- reset()     → resets to original start value, returns it
+- value()     → returns current count without changing it`,
+        hint: "let count = start inside makeCounter. All four methods close over the same count variable.",
+        starterCode: `function makeCounter(start = 0) {\n  // return { increment, decrement, reset, value }\n}`,
+        starterCodes: {
+          javascript: `function makeCounter(start = 0) {\n  let count = start;\n  return {\n    increment() { return ++count; },\n    decrement() { return --count; },\n    reset()     { count = start; return count; },\n    value()     { return count; }\n  };\n}`,
+          python: ``, java: ``, cpp: ``
+        },
+        functionName: "makeCounter",
+        testCases: [],
+        testDisplay: [
+          `makeCounter(5).value() → 5`,
+          `increment() → 6, increment() → 7`,
+          `decrement() → 6, reset() → 5`
+        ],
+        validate: (code) => {
+          try {
+            const fn = new Function(`${code}; return makeCounter;`)();
+            const c = fn(5);
+            if (c.value() !== 5) return false;
+            if (c.increment() !== 6) return false;
+            if (c.increment() !== 7) return false;
+            if (c.decrement() !== 6) return false;
+            if (c.reset() !== 5) return false;
+            return c.value() === 5;
+          } catch { return false; }
+        },
+      },
+
+      // ── Python-only: List Comprehensions ───────────────────────────────────
+      {
+        id: "w3_py1",
+        languages: ["python"],
+        floorNum: 99, title: "List Comprehensions",
+        concept: "w3_py1", type: "code",
+        lesson: `List comprehensions are Python's elegant, readable way to build lists in one line.
+
+# Old way:
+squares = []
+for i in range(1, 6):
+    squares.append(i * i)
+# → [1, 4, 9, 16, 25]
+
+# Pythonic way:
+squares = [i * i for i in range(1, 6)]
+# → [1, 4, 9, 16, 25]
+
+# With a filter condition:
+evens = [i for i in range(1, 11) if i % 2 == 0]
+# → [2, 4, 6, 8, 10]`,
+        challenge: `Write these three functions using list comprehensions:
+
+1. squares(n) → squares of 1 to n
+   squares(5) → [1, 4, 9, 16, 25]
+
+2. evens_only(lst) → keep only even numbers
+   evens_only([1,2,3,4,5,6]) → [2, 4, 6]
+
+3. word_lengths(words) → list of each word's length
+   word_lengths(["hi","hello","hey"]) → [2, 5, 3]`,
+        hint: "[i*i for i in range(1,n+1)] | [x for x in lst if x%2==0] | [len(w) for w in words]",
+        starterCode: `def squares(n):\n    # use a list comprehension\n    pass\n\ndef evens_only(lst):\n    pass\n\ndef word_lengths(words):\n    pass`,
+        starterCodes: {
+          python: `def squares(n):\n    return [i*i for i in range(1, n+1)]\n\ndef evens_only(lst):\n    return [x for x in lst if x % 2 == 0]\n\ndef word_lengths(words):\n    return [len(w) for w in words]`,
+          javascript: ``, java: ``, cpp: ``
+        },
+        functionName: "squares",
+        testCases: [
+          { label: "squares(5)", input: 5, expected: [1,4,9,16,25] },
+        ],
+        testDisplay: [
+          `squares(5) → [1, 4, 9, 16, 25]`,
+          `evens_only([1,2,3,4,5,6]) → [2, 4, 6]`,
+          `word_lengths(["hi","hello","hey"]) → [2, 5, 3]`
+        ],
+        validate: (code) => {
+          return code.includes("for") && code.includes("in") && 
+                 code.includes("[") && code.includes("squares") && code.includes("evens_only");
+        },
+      },
+
+      // ── Java-only: Interfaces ──────────────────────────────────────────────
+      {
+        id: "w3_java1",
+        languages: ["java"],
+        floorNum: 99, title: "Interfaces",
+        concept: "w3_java1", type: "code",
+        lesson: `An interface defines a contract — a set of methods any implementing class MUST provide.
+
+interface Shape {
+    double area();       // method signature, no body
+    double perimeter();
+}
+
+class Circle implements Shape {
+    double r;
+    Circle(double r) { this.r = r; }
+    public double area() { return Math.PI * r * r; }
+    public double perimeter() { return 2 * Math.PI * r; }
+}`,
+        challenge: `Implement the Shape interface with a Rectangle class:
+- area() → width * height
+- perimeter() → 2 * (width + height)
+
+new Rectangle(4, 5).area()       → 20.0
+new Rectangle(4, 5).perimeter()  → 18.0`,
+        hint: "class Rectangle implements Shape { double width, height; ... }",
+        starterCode: `interface Shape {\n    double area();\n    double perimeter();\n}\n\npublic class Rectangle implements Shape {\n    double width, height;\n    public Rectangle(double w, double h) {\n        // store w and h\n    }\n    public double area() { }\n    public double perimeter() { }\n}`,
+        starterCodes: {
+          java: `interface Shape {\n    double area();\n    double perimeter();\n}\npublic class Rectangle implements Shape {\n    double width, height;\n    public Rectangle(double w, double h) { this.width=w; this.height=h; }\n    public double area() { return width*height; }\n    public double perimeter() { return 2*(width+height); }\n}`,
+          javascript: ``, python: ``, cpp: ``
+        },
+        functionName: "Rectangle",
+        testCases: [],
+        testDisplay: [
+          `new Rectangle(4, 5).area() → 20.0`,
+          `new Rectangle(4, 5).perimeter() → 18.0`
+        ],
+        validate: (code) => {
+          return code.includes("implements") && code.includes("area") && code.includes("perimeter");
+        },
+      },
+
+      // ── C++-only: Pointers & References ───────────────────────────────────
+      {
+        id: "w3_cpp1",
+        languages: ["cpp"],
+        floorNum: 99, title: "Pointers & References",
+        concept: "w3_cpp1", type: "code",
+        lesson: `A pointer stores the MEMORY ADDRESS of a variable, not the value.
+
+int x = 42;
+int* ptr = &x;    // & gets address, * declares pointer type
+cout << *ptr;     // * dereferences — prints 42
+*ptr = 99;        // modifies x through the pointer
+cout << x;        // 99
+
+A reference is an alias — another name for the same variable:
+void addTen(int& n) { n += 10; }  // modifies the original`,
+        challenge: `Write two functions:
+1. swapValues(int* a, int* b) — swaps two integers using pointers
+2. scaleArray(int arr[], int size, int factor) — multiplies every element by factor in-place
+
+int a=3, b=7;
+swapValues(&a, &b);  → a=7, b=3
+
+int arr[] = {1,2,3};
+scaleArray(arr, 3, 10);  → arr = {10, 20, 30}`,
+        hint: "int temp = *a; *a = *b; *b = temp; | for loop: arr[i] *= factor;",
+        starterCode: `void swapValues(int* a, int* b) {\n    // swap values at these addresses\n}\n\nvoid scaleArray(int arr[], int size, int factor) {\n    // multiply every element by factor\n}`,
+        starterCodes: {
+          cpp: `void swapValues(int* a, int* b) {\n    int temp = *a; *a = *b; *b = temp;\n}\nvoid scaleArray(int arr[], int size, int factor) {\n    for(int i=0; i<size; i++) arr[i] *= factor;\n}`,
+          javascript: ``, python: ``, java: ``
+        },
+        functionName: "swapValues",
+        testCases: [],
+        testDisplay: [
+          `swapValues(&a, &b) where a=3,b=7 → a=7, b=3`,
+          `scaleArray({1,2,3}, 3, 10) → {10,20,30}`
+        ],
+        validate: (code) => {
+          return code.includes("*") && code.includes("swapValues") && code.includes("scaleArray");
         },
       },
     ],
@@ -1049,11 +1400,43 @@ Python:  def add(a, b): return a + b`,
     description: "Data lives in collections. Learn to store, search, transform.",
     theme: { primary: "#34d399", bg: "#001a0f", accent: "#059669" }, emoji: "📦",
     floors: [
-      { id:"w4f1", floorNum:1, title:"Array Basics", concept:"w4f1", type:"code", lesson:"Arrays are ordered lists. Zero-indexed.", challenge:"Write `arrayInfo(arr)` returning `{length, first, last}`.", hint:"arr.length, arr[0], arr[arr.length-1]", starterCode:`function arrayInfo(arr) {\n  // return {length, first, last}\n}`, starterCodes:{javascript:`function arrayInfo(arr) {\n  return { length: arr.length, first: arr[0], last: arr[arr.length-1] };\n}`, python:`def array_info(arr):\n    return {"length": len(arr), "first": arr[0], "last": arr[-1]}`, java:``, cpp:``}, functionName:"arrayInfo", testCases:[{label:"[10,20,30,40,50]",input:[10,20,30,40,50],expected:{length:5,first:10,last:50}}], testDisplay:[`arrayInfo([10,20,30,40,50]) → {length:5, first:10, last:50}`], validate:(code)=>{ try{ const fn=new Function(`${code}; return arrayInfo;`)(); const r=fn([10,20,30,40,50]); return r.length===5&&r.first===10&&r.last===50; }catch{return false;} } },
-      { id:"w4f2", floorNum:2, title:"Find Largest Without Math.max", concept:"w4f3", type:"code", lesson:"Manual searching — builds algorithmic thinking.", challenge:"Write `findLargest(arr)` WITHOUT using Math.max.", hint:"Start with largest=arr[0], loop and update if current > largest.", starterCode:`function findLargest(arr) {\n  // do NOT use Math.max\n}`, starterCodes:{javascript:`function findLargest(arr) {\n  let largest = arr[0];\n  for (let i = 1; i < arr.length; i++) {\n    if (arr[i] > largest) largest = arr[i];\n  }\n  return largest;\n}`, python:`def find_largest(arr):\n    largest = arr[0]\n    for x in arr:\n        if x > largest:\n            largest = x\n    return largest`, java:``, cpp:``}, functionName:"findLargest", testCases:[{label:"[3,1,9,2,7]",input:[3,1,9,2,7],expected:9},{label:"[-1,-5,-2]",input:[-1,-5,-2],expected:-1}], testDisplay:[`findLargest([3,1,9,2,7]) → 9`,`findLargest([-1,-5,-2]) → -1`,`No Math.max!`], validate:(code)=>{ try{ if(code.includes("Math.max"))return false; const fn=new Function(`${code}; return findLargest;`)(); return fn([3,1,9,2,7])===9&&fn([-1,-5,-2])===-1; }catch{return false;} } },
-      { id:"w4f3", floorNum:3, title:"Remove Duplicates", concept:"w4f5", type:"code", lesson:"Sets automatically hold unique values only.", challenge:"Write `removeDuplicates(arr)` returning array with duplicates removed.", hint:"Use [...new Set(arr)] or loop with seen object.", starterCode:`function removeDuplicates(arr) {\n  // your code here\n}`, starterCodes:{javascript:`function removeDuplicates(arr) {\n  return [...new Set(arr)];\n}`, python:`def remove_duplicates(arr):\n    return list(dict.fromkeys(arr))`, java:``, cpp:``}, functionName:"removeDuplicates", testCases:[{label:"[1,2,2,3,3,3]",input:[1,2,2,3,3,3],expected:[1,2,3]}], testDisplay:[`removeDuplicates([1,2,2,3,3,3]) → [1,2,3]`], validate:(code)=>{ try{ const fn=new Function(`${code}; return removeDuplicates;`)(); return JSON.stringify(fn([1,2,2,3,3,3]))===JSON.stringify([1,2,3]); }catch{return false;} } },
-      { id:"w4f4", floorNum:4, title:"Frequency Counter", concept:"w4f6", type:"code", lesson:"Objects as frequency maps — a hugely useful pattern.", challenge:"Write `frequency(arr)` returning object mapping each value to its count.", hint:"obj[item] = (obj[item] || 0) + 1", starterCode:`function frequency(arr) {\n  // return {value: count, ...}\n}`, starterCodes:{javascript:`function frequency(arr) {\n  let obj = {};\n  for (let item of arr) {\n    obj[item] = (obj[item] || 0) + 1;\n  }\n  return obj;\n}`, python:`def frequency(arr):\n    obj = {}\n    for item in arr:\n        obj[item] = obj.get(item, 0) + 1\n    return obj`, java:``, cpp:``}, functionName:"frequency", testCases:[{label:'["a","b","a","c","b","a"]',input:["a","b","a","c","b","a"],expected:{a:3,b:2,c:1}}], testDisplay:[`frequency(["a","b","a","c","b","a"]) → {a:3, b:2, c:1}`], validate:(code)=>{ try{ const fn=new Function(`${code}; return frequency;`)(); const r=fn(["a","b","a","c","b","a"]); return r.a===3&&r.b===2&&r.c===1; }catch{return false;} } },
-      { id:"w4f5", floorNum:5, title:"Anagram Checker", concept:"w4f8", type:"code", lesson:"Anagrams: same letters, different order. Sort both and compare.", challenge:"Write `isAnagram(s1, s2)` returning true if strings are anagrams (ignore case, spaces).", hint:"Clean both strings, sort chars, compare.", starterCode:`function isAnagram(s1, s2) {\n  // your code here\n}`, starterCodes:{javascript:`function isAnagram(s1, s2) {\n  const clean = s => s.toLowerCase().replace(/\\s/g,"").split("").sort().join("");\n  return clean(s1) === clean(s2);\n}`, python:`def is_anagram(s1, s2):\n    clean = lambda s: sorted(s.lower().replace(" ", ""))\n    return clean(s1) == clean(s2)`, java:``, cpp:``}, functionName:"isAnagram", testCases:[{label:"listen/silent",input:["listen","silent"],expected:true},{label:"hello/world",input:["hello","world"],expected:false}], testDisplay:[`isAnagram("listen","silent") → true`,`isAnagram("hello","world") → false`], validate:(code)=>{ try{ const fn=new Function(`${code}; return isAnagram;`)(); return fn("listen","silent")===true&&fn("hello","world")===false&&fn("Astronomer","Moon starer")===true; }catch{return false;} } },
+      {
+        id: "w4f0", floorNum: 1, title: "String Manipulation",
+        languages: ["javascript","python","java","cpp"],
+        concept: "w4f0", type: "code",
+        lesson: "Strings are arrays of characters. You can reverse, slice, search, and transform them with built-in methods.",
+        challenge: `Write reverseWords(sentence) that reverses the ORDER of words (not letters).
+
+reverseWords("Hello World") → "World Hello"
+reverseWords("I love coding") → "coding love I"`,
+        hint: `Split by space → reverse the array → join back with space.
+JS: sentence.split(" ").reverse().join(" ")
+Python: " ".join(sentence.split()[::-1])`,
+        starterCode: `function reverseWords(sentence) {\n  // reverse word order\n}`,
+        starterCodes: {
+          javascript: `function reverseWords(sentence) {\n  return sentence.split(" ").reverse().join(" ");\n}`,
+          python: `def reverse_words(sentence):\n    return " ".join(sentence.split()[::-1])`,
+          java: `public String reverseWords(String sentence) {\n    String[] w=sentence.split(" ");\n    StringBuilder sb=new StringBuilder();\n    for(int i=w.length-1;i>=0;i--){sb.append(w[i]);if(i>0)sb.append(" ");}\n    return sb.toString();\n}`,
+          cpp: `string reverseWords(string sentence) {\n    vector<string> words;\n    stringstream ss(sentence);string w;\n    while(ss>>w)words.push_back(w);\n    reverse(words.begin(),words.end());\n    string r="";for(int i=0;i<(int)words.size();i++){r+=words[i];if(i<(int)words.size()-1)r+=" ";}\n    return r;\n}`,
+        },
+        functionName: "reverseWords",
+        testCases: [
+          { label: '"Hello World"', input: "Hello World", expected: "World Hello" },
+          { label: '"I love coding"', input: "I love coding", expected: "coding love I" },
+        ],
+        testDisplay: [`reverseWords("Hello World") → "World Hello"`, `reverseWords("I love coding") → "coding love I"`],
+        validate: (code) => {
+          try {
+            const fn = new Function(`${code}; return reverseWords;`)();
+            return fn("Hello World") === "World Hello" && fn("I love coding") === "coding love I";
+          } catch { return false; }
+        },
+      },
+      { id:"w4f1", floorNum:2, title:"Array Basics", languages:["javascript","python","java","cpp"], concept:"w4f1", type:"code", lesson:"Arrays are ordered lists. Zero-indexed.", challenge:"Write `arrayInfo(arr)` returning `{length, first, last}`.", hint:"arr.length, arr[0], arr[arr.length-1]", starterCode:`function arrayInfo(arr) {\n  // return {length, first, last}\n}`, starterCodes:{javascript:`function arrayInfo(arr) {\n  return { length: arr.length, first: arr[0], last: arr[arr.length-1] };\n}`, python:`def array_info(arr):\n    return {"length": len(arr), "first": arr[0], "last": arr[-1]}`, java:``, cpp:``}, functionName:"arrayInfo", testCases:[{label:"[10,20,30,40,50]",input:[10,20,30,40,50],expected:{length:5,first:10,last:50}}], testDisplay:[`arrayInfo([10,20,30,40,50]) → {length:5, first:10, last:50}`], validate:(code)=>{ try{ const fn=new Function(`${code}; return arrayInfo;`)(); const r=fn([10,20,30,40,50]); return r.length===5&&r.first===10&&r.last===50; }catch{return false;} } },
+      { id:"w4f2", floorNum:3, title:"Find Largest Without Math.max", languages:["javascript","python","java","cpp"], concept:"w4f3", type:"code", lesson:"Manual searching — builds algorithmic thinking.", challenge:"Write `findLargest(arr)` WITHOUT using Math.max.", hint:"Start with largest=arr[0], loop and update if current > largest.", starterCode:`function findLargest(arr) {\n  // do NOT use Math.max\n}`, starterCodes:{javascript:`function findLargest(arr) {\n  let largest = arr[0];\n  for (let i = 1; i < arr.length; i++) {\n    if (arr[i] > largest) largest = arr[i];\n  }\n  return largest;\n}`, python:`def find_largest(arr):\n    largest = arr[0]\n    for x in arr:\n        if x > largest:\n            largest = x\n    return largest`, java:``, cpp:``}, functionName:"findLargest", testCases:[{label:"[3,1,9,2,7]",input:[3,1,9,2,7],expected:9},{label:"[-1,-5,-2]",input:[-1,-5,-2],expected:-1}], testDisplay:[`findLargest([3,1,9,2,7]) → 9`,`findLargest([-1,-5,-2]) → -1`,`No Math.max!`], validate:(code)=>{ try{ if(code.includes("Math.max"))return false; const fn=new Function(`${code}; return findLargest;`)(); return fn([3,1,9,2,7])===9&&fn([-1,-5,-2])===-1; }catch{return false;} } },
+      { id:"w4f3", floorNum:4, title:"Remove Duplicates", languages:["javascript","python","java","cpp"], concept:"w4f5", type:"code", lesson:"Sets automatically hold unique values only.", challenge:"Write `removeDuplicates(arr)` returning array with duplicates removed.", hint:"Use [...new Set(arr)] or loop with seen object.", starterCode:`function removeDuplicates(arr) {\n  // your code here\n}`, starterCodes:{javascript:`function removeDuplicates(arr) {\n  return [...new Set(arr)];\n}`, python:`def remove_duplicates(arr):\n    return list(dict.fromkeys(arr))`, java:``, cpp:``}, functionName:"removeDuplicates", testCases:[{label:"[1,2,2,3,3,3]",input:[1,2,2,3,3,3],expected:[1,2,3]}], testDisplay:[`removeDuplicates([1,2,2,3,3,3]) → [1,2,3]`], validate:(code)=>{ try{ const fn=new Function(`${code}; return removeDuplicates;`)(); return JSON.stringify(fn([1,2,2,3,3,3]))===JSON.stringify([1,2,3]); }catch{return false;} } },
+      { id:"w4f4", floorNum:5, title:"Frequency Counter", languages:["javascript","python","java","cpp"], concept:"w4f6", type:"code", lesson:"Objects as frequency maps — a hugely useful pattern.", challenge:"Write `frequency(arr)` returning object mapping each value to its count.", hint:"obj[item] = (obj[item] || 0) + 1", starterCode:`function frequency(arr) {\n  // return {value: count, ...}\n}`, starterCodes:{javascript:`function frequency(arr) {\n  let obj = {};\n  for (let item of arr) {\n    obj[item] = (obj[item] || 0) + 1;\n  }\n  return obj;\n}`, python:`def frequency(arr):\n    obj = {}\n    for item in arr:\n        obj[item] = obj.get(item, 0) + 1\n    return obj`, java:``, cpp:``}, functionName:"frequency", testCases:[{label:'["a","b","a","c","b","a"]',input:["a","b","a","c","b","a"],expected:{a:3,b:2,c:1}}], testDisplay:[`frequency(["a","b","a","c","b","a"]) → {a:3, b:2, c:1}`], validate:(code)=>{ try{ const fn=new Function(`${code}; return frequency;`)(); const r=fn(["a","b","a","c","b","a"]); return r.a===3&&r.b===2&&r.c===1; }catch{return false;} } },
+      { id:"w4f5", floorNum:6, title:"Anagram Checker", languages:["javascript","python","java","cpp"], concept:"w4f8", type:"code", lesson:"Anagrams: same letters, different order. Sort both and compare.", challenge:"Write `isAnagram(s1, s2)` returning true if strings are anagrams (ignore case, spaces).", hint:"Clean both strings, sort chars, compare.", starterCode:`function isAnagram(s1, s2) {\n  // your code here\n}`, starterCodes:{javascript:`function isAnagram(s1, s2) {\n  const clean = s => s.toLowerCase().replace(/\\s/g,"").split("").sort().join("");\n  return clean(s1) === clean(s2);\n}`, python:`def is_anagram(s1, s2):\n    clean = lambda s: sorted(s.lower().replace(" ", ""))\n    return clean(s1) == clean(s2)`, java:``, cpp:``}, functionName:"isAnagram", testCases:[{label:"listen/silent",input:["listen","silent"],expected:true},{label:"hello/world",input:["hello","world"],expected:false}], testDisplay:[`isAnagram("listen","silent") → true`,`isAnagram("hello","world") → false`], validate:(code)=>{ try{ const fn=new Function(`${code}; return isAnagram;`)(); return fn("listen","silent")===true&&fn("hello","world")===false&&fn("Astronomer","Moon starer")===true; }catch{return false;} } },
     ],
     boss: {
       id:"w4boss", type:"mastery", title:"Mastery Forge: Contact Manager", bossName:"The Vault Keeper", bossEmoji:"📦",
@@ -1071,11 +1454,190 @@ Python:  def add(a, b): return a + b`,
     description:"Real problems. Real thinking. This is where coders are made.",
     theme:{primary:"#f87171",bg:"#1a0505",accent:"#dc2626"}, emoji:"⚔️",
     floors:[
-      { id:"w5f1", floorNum:1, title:"Binary Search", concept:"w5f2", type:"code", lesson:"Binary search halves the search space each time — O(log n).", challenge:"Write `binarySearch(sortedArr, target)` — returns index or -1.", hint:"Use low, high, mid. Compare mid to target.", starterCode:`function binarySearch(sortedArr, target) {\n  // return index or -1\n}`, starterCodes:{javascript:`function binarySearch(arr, target) {\n  let low = 0, high = arr.length - 1;\n  while (low <= high) {\n    let mid = Math.floor((low + high) / 2);\n    if (arr[mid] === target) return mid;\n    if (arr[mid] < target) low = mid + 1;\n    else high = mid - 1;\n  }\n  return -1;\n}`, python:`def binary_search(arr, target):\n    low, high = 0, len(arr) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if arr[mid] == target: return mid\n        elif arr[mid] < target: low = mid + 1\n        else: high = mid - 1\n    return -1`, java:``, cpp:``}, functionName:"binarySearch", testCases:[{label:"find 7",input:[[1,3,5,7,9,11],7],expected:3},{label:"not found",input:[[1,3,5],10],expected:-1}], testDisplay:[`binarySearch([1,3,5,7,9,11], 7) → 3`,`binarySearch([1,3,5], 10) → -1`], validate:(code)=>{ try{ const fn=new Function(`${code}; return binarySearch;`)(); return fn([1,3,5,7,9,11],7)===3&&fn([1,3,5,7,9],10)===-1; }catch{return false;} } },
-      { id:"w5f2", floorNum:2, title:"Bubble Sort", concept:"w5f3", type:"code", lesson:"Sorting algorithms rearrange data. Bubble sort: compare adjacent, swap if out of order.", challenge:"Write `bubbleSort(arr)` without using .sort().", hint:"Nested loops. Compare arr[j] and arr[j+1], swap if out of order.", starterCode:`function bubbleSort(arr) {\n  let a = [...arr];\n  // sort without .sort()\n  return a;\n}`, starterCodes:{javascript:`function bubbleSort(arr) {\n  let a = [...arr];\n  for (let i = 0; i < a.length; i++) {\n    for (let j = 0; j < a.length - i - 1; j++) {\n      if (a[j] > a[j+1]) {\n        let temp = a[j];\n        a[j] = a[j+1];\n        a[j+1] = temp;\n      }\n    }\n  }\n  return a;\n}`, python:`def bubble_sort(arr):\n    a = arr[:]\n    for i in range(len(a)):\n        for j in range(len(a) - i - 1):\n            if a[j] > a[j+1]:\n                a[j], a[j+1] = a[j+1], a[j]\n    return a`, java:``, cpp:``}, functionName:"bubbleSort", testCases:[{label:"[5,3,1,4,2]",input:[5,3,1,4,2],expected:[1,2,3,4,5]}], testDisplay:[`bubbleSort([5,3,1,4,2]) → [1,2,3,4,5]`,`No .sort() allowed!`], validate:(code)=>{ try{ if(code.includes(".sort("))return false; const fn=new Function(`${code}; return bubbleSort;`)(); return JSON.stringify(fn([5,3,1,4,2]))===JSON.stringify([1,2,3,4,5]); }catch{return false;} } },
-      { id:"w5f3", floorNum:3, title:"Fibonacci (Recursion)", concept:"w5f4", type:"code", lesson:"Recursion: a function that calls itself. Always needs a base case.", challenge:"Write `fibonacci(n)` recursively. (0,1,1,2,3,5,8...)", hint:"Base: fib(0)=0, fib(1)=1. Recursive: fib(n-1)+fib(n-2)", starterCode:`function fibonacci(n) {\n  // your code here\n}`, starterCodes:{javascript:`function fibonacci(n) {\n  if (n <= 0) return 0;\n  if (n === 1) return 1;\n  return fibonacci(n-1) + fibonacci(n-2);\n}`, python:`def fibonacci(n):\n    if n <= 0: return 0\n    if n == 1: return 1\n    return fibonacci(n-1) + fibonacci(n-2)`, java:``, cpp:``}, functionName:"fibonacci", testCases:[{label:"fib(0)",input:0,expected:0},{label:"fib(6)",input:6,expected:8},{label:"fib(10)",input:10,expected:55}], testDisplay:[`fibonacci(0) → 0`,`fibonacci(6) → 8`,`fibonacci(10) → 55`], validate:(code)=>{ try{ const fn=new Function(`${code}; return fibonacci;`)(); return fn(0)===0&&fn(6)===8&&fn(10)===55; }catch{return false;} } },
-      { id:"w5f4", floorNum:4, title:"Find the Duplicate", concept:"w4f6", type:"code", lesson:"Use a Set or object to track seen values efficiently.", challenge:"Write `findDuplicate(arr)` returning the first duplicate, or null if none.", hint:"Use a Set. If you see an item already in the set — that's the duplicate.", starterCode:`function findDuplicate(arr) {\n  // your code here\n}`, starterCodes:{javascript:`function findDuplicate(arr) {\n  let seen = new Set();\n  for (let item of arr) {\n    if (seen.has(item)) return item;\n    seen.add(item);\n  }\n  return null;\n}`, python:`def find_duplicate(arr):\n    seen = set()\n    for item in arr:\n        if item in seen: return item\n        seen.add(item)\n    return None`, java:``, cpp:``}, functionName:"findDuplicate", testCases:[{label:"[1,2,3,2,4]",input:[1,2,3,2,4],expected:2},{label:"[1,2,3]",input:[1,2,3],expected:null}], testDisplay:[`findDuplicate([1,2,3,2,4]) → 2`,`findDuplicate([1,2,3]) → null`], validate:(code)=>{ try{ const fn=new Function(`${code}; return findDuplicate;`)(); return fn([1,2,3,2,4])===2&&fn([1,2,3])===null; }catch{return false;} } },
-      { id:"w5f5", floorNum:5, title:"Flatten Nested Array", concept:"w5f5", type:"code", lesson:"Recursion shines on nested structures.", challenge:"Write `flatten(arr)` that flattens a deeply nested array.", hint:"If item is array, recurse. Otherwise push it.", starterCode:`function flatten(arr) {\n  // flatten [1,[2,[3]],4] → [1,2,3,4]\n}`, starterCodes:{javascript:`function flatten(arr) {\n  let result = [];\n  for (let item of arr) {\n    if (Array.isArray(item)) result = result.concat(flatten(item));\n    else result.push(item);\n  }\n  return result;\n}`, python:`def flatten(arr):\n    result = []\n    for item in arr:\n        if isinstance(item, list): result.extend(flatten(item))\n        else: result.append(item)\n    return result`, java:``, cpp:``}, functionName:"flatten", testCases:[{label:"nested",input:[1,[2,[3,[4]]],5],expected:[1,2,3,4,5]}], testDisplay:[`flatten([1,[2,[3,[4]]],5]) → [1,2,3,4,5]`], validate:(code)=>{ try{ const fn=new Function(`${code}; return flatten;`)(); return JSON.stringify(fn([1,[2,[3,[4]]],5]))===JSON.stringify([1,2,3,4,5]); }catch{return false;} } },
+      { id:"w5f0", floorNum:1, title:"Two Pointers", languages:["javascript","python","java","cpp"], concept:"w5f0", type:"code", lesson:"Two pointers: use two index variables moving toward each other. Great for sorted arrays and palindrome checks.", challenge:"Write `twoSum(arr, target)` that finds two numbers in a SORTED array that add up to target. Return their indices as [i, j], or null if not found.", hint:"Left pointer starts at 0, right at end. If sum too small move left++, too big move right--.", starterCode:`function twoSum(arr, target) {\n  // use two pointers\n}`, starterCodes:{javascript:`function twoSum(arr, target) {\n  let l=0, r=arr.length-1;\n  while(l<r){\n    let sum=arr[l]+arr[r];\n    if(sum===target) return [l,r];\n    else if(sum<target) l++;\n    else r--;\n  }\n  return null;\n}`, python:`def two_sum(arr, target):\n    l, r = 0, len(arr)-1\n    while l < r:\n        s = arr[l]+arr[r]\n        if s == target: return [l, r]\n        elif s < target: l += 1\n        else: r -= 1\n    return None`, java:``, cpp:``}, functionName:"twoSum", testCases:[{label:"[1,2,3,4,6], 6",input:[[1,2,3,4,6],6],expected:[1,3]},{label:"[1,3,5,7], 8",input:[[1,3,5,7],8],expected:[1,2]}], testDisplay:[`twoSum([1,2,3,4,6], 6) → [1,3]`,`twoSum([1,3,5,7], 8) → [1,2]`], validate:(code)=>{ try{ const fn=new Function(`${code}; return twoSum;`)(); const r1=fn([1,2,3,4,6],6); const r2=fn([1,3,5,7],8); return JSON.stringify(r1)===JSON.stringify([1,3])&&JSON.stringify(r2)===JSON.stringify([1,2]); }catch{return false;} } },
+      { id:"w5f1", floorNum:2, title:"Binary Search", languages:["javascript","python","java","cpp"], concept:"w5f2", type:"code", lesson:"Binary search halves the search space each time — O(log n).", challenge:"Write `binarySearch(sortedArr, target)` — returns index or -1.", hint:"Use low, high, mid. Compare mid to target.", starterCode:`function binarySearch(sortedArr, target) {\n  // return index or -1\n}`, starterCodes:{javascript:`function binarySearch(arr, target) {\n  let low = 0, high = arr.length - 1;\n  while (low <= high) {\n    let mid = Math.floor((low + high) / 2);\n    if (arr[mid] === target) return mid;\n    if (arr[mid] < target) low = mid + 1;\n    else high = mid - 1;\n  }\n  return -1;\n}`, python:`def binary_search(arr, target):\n    low, high = 0, len(arr) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if arr[mid] == target: return mid\n        elif arr[mid] < target: low = mid + 1\n        else: high = mid - 1\n    return -1`, java:``, cpp:``}, functionName:"binarySearch", testCases:[{label:"find 7",input:[[1,3,5,7,9,11],7],expected:3},{label:"not found",input:[[1,3,5],10],expected:-1}], testDisplay:[`binarySearch([1,3,5,7,9,11], 7) → 3`,`binarySearch([1,3,5], 10) → -1`], validate:(code)=>{ try{ const fn=new Function(`${code}; return binarySearch;`)(); return fn([1,3,5,7,9,11],7)===3&&fn([1,3,5,7,9],10)===-1; }catch{return false;} } },
+      { id:"w5f2", floorNum:3, title:"Bubble Sort", languages:["javascript","python","java","cpp"], concept:"w5f3", type:"code", lesson:"Sorting algorithms rearrange data. Bubble sort: compare adjacent, swap if out of order.", challenge:"Write `bubbleSort(arr)` without using .sort().", hint:"Nested loops. Compare arr[j] and arr[j+1], swap if out of order.", starterCode:`function bubbleSort(arr) {\n  let a = [...arr];\n  // sort without .sort()\n  return a;\n}`, starterCodes:{javascript:`function bubbleSort(arr) {\n  let a = [...arr];\n  for (let i = 0; i < a.length; i++) {\n    for (let j = 0; j < a.length - i - 1; j++) {\n      if (a[j] > a[j+1]) {\n        let temp = a[j];\n        a[j] = a[j+1];\n        a[j+1] = temp;\n      }\n    }\n  }\n  return a;\n}`, python:`def bubble_sort(arr):\n    a = arr[:]\n    for i in range(len(a)):\n        for j in range(len(a) - i - 1):\n            if a[j] > a[j+1]:\n                a[j], a[j+1] = a[j+1], a[j]\n    return a`, java:``, cpp:``}, functionName:"bubbleSort", testCases:[{label:"[5,3,1,4,2]",input:[5,3,1,4,2],expected:[1,2,3,4,5]}], testDisplay:[`bubbleSort([5,3,1,4,2]) → [1,2,3,4,5]`,`No .sort() allowed!`], validate:(code)=>{ try{ if(code.includes(".sort("))return false; const fn=new Function(`${code}; return bubbleSort;`)(); return JSON.stringify(fn([5,3,1,4,2]))===JSON.stringify([1,2,3,4,5]); }catch{return false;} } },
+      { id:"w5f3", floorNum:4, title:"Fibonacci (Recursion)", languages:["javascript","python","java","cpp"], concept:"w5f4", type:"code", lesson:"Recursion: a function that calls itself. Always needs a base case.", challenge:"Write `fibonacci(n)` recursively. (0,1,1,2,3,5,8...)", hint:"Base: fib(0)=0, fib(1)=1. Recursive: fib(n-1)+fib(n-2)", starterCode:`function fibonacci(n) {\n  // your code here\n}`, starterCodes:{javascript:`function fibonacci(n) {\n  if (n <= 0) return 0;\n  if (n === 1) return 1;\n  return fibonacci(n-1) + fibonacci(n-2);\n}`, python:`def fibonacci(n):\n    if n <= 0: return 0\n    if n == 1: return 1\n    return fibonacci(n-1) + fibonacci(n-2)`, java:``, cpp:``}, functionName:"fibonacci", testCases:[{label:"fib(0)",input:0,expected:0},{label:"fib(6)",input:6,expected:8},{label:"fib(10)",input:10,expected:55}], testDisplay:[`fibonacci(0) → 0`,`fibonacci(6) → 8`,`fibonacci(10) → 55`], validate:(code)=>{ try{ const fn=new Function(`${code}; return fibonacci;`)(); return fn(0)===0&&fn(6)===8&&fn(10)===55; }catch{return false;} } },
+      { id:"w5f4", floorNum:5, title:"Find the Duplicate", languages:["javascript","python","java","cpp"], concept:"w4f6", type:"code", lesson:"Use a Set or object to track seen values efficiently.", challenge:"Write `findDuplicate(arr)` returning the first duplicate, or null if none.", hint:"Use a Set. If you see an item already in the set — that's the duplicate.", starterCode:`function findDuplicate(arr) {\n  // your code here\n}`, starterCodes:{javascript:`function findDuplicate(arr) {\n  let seen = new Set();\n  for (let item of arr) {\n    if (seen.has(item)) return item;\n    seen.add(item);\n  }\n  return null;\n}`, python:`def find_duplicate(arr):\n    seen = set()\n    for item in arr:\n        if item in seen: return item\n        seen.add(item)\n    return None`, java:``, cpp:``}, functionName:"findDuplicate", testCases:[{label:"[1,2,3,2,4]",input:[1,2,3,2,4],expected:2},{label:"[1,2,3]",input:[1,2,3],expected:null}], testDisplay:[`findDuplicate([1,2,3,2,4]) → 2`,`findDuplicate([1,2,3]) → null`], validate:(code)=>{ try{ const fn=new Function(`${code}; return findDuplicate;`)(); return fn([1,2,3,2,4])===2&&fn([1,2,3])===null; }catch{return false;} } },
+      { id:"w5f5", floorNum:6, title:"Flatten Nested Array", languages:["javascript","python","java","cpp"], concept:"w5f5", type:"code", lesson:"Recursion shines on nested structures.", challenge:"Write `flatten(arr)` that flattens a deeply nested array.", hint:"If item is array, recurse. Otherwise push it.", starterCode:`function flatten(arr) {\n  // flatten [1,[2,[3]],4] → [1,2,3,4]\n}`, starterCodes:{javascript:`function flatten(arr) {\n  let result = [];\n  for (let item of arr) {\n    if (Array.isArray(item)) result = result.concat(flatten(item));\n    else result.push(item);\n  }\n  return result;\n}`, python:`def flatten(arr):\n    result = []\n    for item in arr:\n        if isinstance(item, list): result.extend(flatten(item))\n        else: result.append(item)\n    return result`, java:``, cpp:``}, functionName:"flatten", testCases:[{label:"nested",input:[1,[2,[3,[4]]],5],expected:[1,2,3,4,5]}], testDisplay:[`flatten([1,[2,[3,[4]]],5]) → [1,2,3,4,5]`], validate:(code)=>{ try{ const fn=new Function(`${code}; return flatten;`)(); return JSON.stringify(fn([1,[2,[3,[4]]],5]))===JSON.stringify([1,2,3,4,5]); }catch{return false;} } },
+      // ── JS-only: Array HOFs (map/filter/reduce) ────────────────────────────
+      {
+        id: "w5_js1",
+        languages: ["javascript"],
+        floorNum: 99, title: "map / filter / reduce",
+        concept: "w5_js1", type: "code",
+        lesson: `The three most powerful array methods in JavaScript:
+
+map    → transform every element
+  [1,2,3].map(x => x * 2)       → [2, 4, 6]
+
+filter → keep elements that pass a test
+  [1,2,3,4].filter(x => x > 2)  → [3, 4]
+
+reduce → combine all elements into one value
+  [1,2,3,4].reduce((sum,x) => sum + x, 0)  → 10`,
+        challenge: `Write these three functions using ONLY map/filter/reduce (no loops):
+
+1. doublePositives(arr) → double only positive numbers, remove negatives
+   doublePositives([1,-2,3,-4,5]) → [2, 6, 10]
+
+2. sumOfSquares(arr) → sum of each number squared
+   sumOfSquares([1,2,3,4]) → 30  (1+4+9+16)
+
+3. groupByParity(arr) → {even: [...], odd: [...]}
+   groupByParity([1,2,3,4,5]) → {even:[2,4], odd:[1,3,5]}`,
+        hint: "Chain: arr.filter(x => x > 0).map(x => x * 2) | reduce((acc,x) => acc + x*x, 0)",
+        starterCode: `function doublePositives(arr) {\n  // filter then map\n}\n\nfunction sumOfSquares(arr) {\n  // map then reduce\n}\n\nfunction groupByParity(arr) {\n  // reduce into {even:[], odd:[]}\n}`,
+        starterCodes: {
+          javascript: `function doublePositives(arr) {\n  return arr.filter(x => x > 0).map(x => x * 2);\n}\nfunction sumOfSquares(arr) {\n  return arr.reduce((sum, x) => sum + x * x, 0);\n}\nfunction groupByParity(arr) {\n  return arr.reduce((acc, x) => {\n    if (x % 2 === 0) acc.even.push(x); else acc.odd.push(x);\n    return acc;\n  }, { even: [], odd: [] });\n}`,
+          python: ``, java: ``, cpp: ``
+        },
+        functionName: "doublePositives",
+        testCases: [
+          { label: "doublePositives", input: [1,-2,3,-4,5], expected: [2,6,10] },
+        ],
+        testDisplay: [
+          `doublePositives([1,-2,3,-4,5]) → [2, 6, 10]`,
+          `sumOfSquares([1,2,3,4]) → 30`,
+          `groupByParity([1,2,3,4,5]) → {even:[2,4], odd:[1,3,5]}`
+        ],
+        validate: (code) => {
+          try {
+            const fn = new Function(`${code}; return doublePositives;`)();
+            const r = fn([1,-2,3,-4,5]);
+            if (JSON.stringify(r) !== JSON.stringify([2,6,10])) return false;
+            const fn2 = new Function(`${code}; return sumOfSquares;`)();
+            if (fn2([1,2,3,4]) !== 30) return false;
+            return true;
+          } catch { return false; }
+        },
+      },
+
+      // ── Python-only: Generators ────────────────────────────────────────────
+      {
+        id: "w5_py1",
+        languages: ["python"],
+        floorNum: 99, title: "Generators & yield",
+        concept: "w5_py1", type: "code",
+        lesson: `Generators produce values one at a time using yield — memory efficient for large sequences.
+
+def countdown(n):
+    while n > 0:
+        yield n      # pauses here, returns n
+        n -= 1
+
+for x in countdown(3):
+    print(x)     # 3, 2, 1
+
+# Generator expression (like list comprehension but lazy):
+squares = (x*x for x in range(10))  # doesn't compute until needed`,
+        challenge: `Write two generators:
+
+1. fibonacci_gen(limit) → yields Fibonacci numbers up to limit
+   list(fibonacci_gen(20)) → [0, 1, 1, 2, 3, 5, 8, 13]
+
+2. running_total(numbers) → yields running sum of a list
+   list(running_total([1,2,3,4])) → [1, 3, 6, 10]`,
+        hint: "def fibonacci_gen(limit): a, b = 0, 1; while a <= limit: yield a; a, b = b, a+b",
+        starterCode: `def fibonacci_gen(limit):\n    # yield fibonacci numbers up to limit\n    pass\n\ndef running_total(numbers):\n    # yield running sum\n    pass`,
+        starterCodes: {
+          python: `def fibonacci_gen(limit):\n    a, b = 0, 1\n    while a <= limit:\n        yield a\n        a, b = b, a + b\n\ndef running_total(numbers):\n    total = 0\n    for n in numbers:\n        total += n\n        yield total`,
+          javascript: ``, java: ``, cpp: ``
+        },
+        functionName: "fibonacci_gen",
+        testCases: [],
+        testDisplay: [
+          `list(fibonacci_gen(20)) → [0, 1, 1, 2, 3, 5, 8, 13]`,
+          `list(running_total([1,2,3,4])) → [1, 3, 6, 10]`
+        ],
+        validate: (code) => {
+          return code.includes("yield") && code.includes("fibonacci") && code.includes("running_total");
+        },
+      },
+
+      // ── Java-only: Collections ─────────────────────────────────────────────
+      {
+        id: "w5_java1",
+        languages: ["java"],
+        floorNum: 99, title: "Collections: ArrayList & HashMap",
+        concept: "w5_java1", type: "code",
+        lesson: `Java's Collections Framework provides powerful data structures:
+
+ArrayList<String> list = new ArrayList<>();
+list.add("hello");
+list.get(0);          // "hello"
+list.size();          // 1
+list.remove(0);
+
+HashMap<String, Integer> map = new HashMap<>();
+map.put("score", 100);
+map.get("score");     // 100
+map.containsKey("score");  // true`,
+        challenge: `Write wordCount(String sentence) that:
+- Splits the sentence into words
+- Returns a HashMap<String, Integer> with word frequency
+
+wordCount("the cat sat on the mat")
+→ {the=2, cat=1, sat=1, on=1, mat=1}`,
+        hint: `String[] words = sentence.split(" ");
+HashMap<String,Integer> map = new HashMap<>();
+map.put(w, map.getOrDefault(w, 0) + 1);`,
+        starterCode: `import java.util.*;\npublic HashMap<String, Integer> wordCount(String sentence) {\n    // split and count each word\n}`,
+        starterCodes: {
+          java: `import java.util.*;\npublic HashMap<String, Integer> wordCount(String sentence) {\n    HashMap<String, Integer> map = new HashMap<>();\n    for (String w : sentence.split(" ")) {\n        map.put(w, map.getOrDefault(w, 0) + 1);\n    }\n    return map;\n}`,
+          javascript: ``, python: ``, cpp: ``
+        },
+        functionName: "wordCount",
+        testCases: [],
+        testDisplay: [
+          `wordCount("the cat sat on the mat")`,
+          `→ {the=2, cat=1, sat=1, on=1, mat=1}`
+        ],
+        validate: (code) => {
+          return code.includes("HashMap") && code.includes("split") && code.includes("put");
+        },
+      },
+
+      // ── C++-only: STL ─────────────────────────────────────────────────────
+      {
+        id: "w5_cpp1",
+        languages: ["cpp"],
+        floorNum: 99, title: "STL: vector & map",
+        concept: "w5_cpp1", type: "code",
+        lesson: `The C++ Standard Template Library (STL) provides containers:
+
+vector<int> v = {1, 2, 3};
+v.push_back(4);
+v.size();          // 4
+v[0];              // 1
+sort(v.begin(), v.end());
+
+map<string, int> m;
+m["score"] = 100;
+m["score"];        // 100
+m.count("score");  // 1 (exists)`,
+        challenge: `Write wordFrequency(string sentence) that:
+- Splits sentence by spaces
+- Returns map<string,int> with word counts
+
+wordFrequency("the cat sat the cat") 
+→ {cat:2, sat:1, the:2}`,
+        hint: "Use stringstream to split. map[word]++ to count.",
+        starterCode: `#include<bits/stdc++.h>\nusing namespace std;\nmap<string,int> wordFrequency(string sentence) {\n    // split by spaces and count\n}`,
+        starterCodes: {
+          cpp: `#include<bits/stdc++.h>\nusing namespace std;\nmap<string,int> wordFrequency(string sentence) {\n    map<string,int> freq;\n    stringstream ss(sentence);\n    string word;\n    while(ss >> word) freq[word]++;\n    return freq;\n}`,
+          javascript: ``, python: ``, java: ``
+        },
+        functionName: "wordFrequency",
+        testCases: [],
+        testDisplay: [
+          `wordFrequency("the cat sat the cat")`,
+          `→ {cat:2, sat:1, the:2}`
+        ],
+        validate: (code) => {
+          return code.includes("map") && code.includes("stringstream") && code.includes("wordFrequency");
+        },
+      },
     ],
     boss:{ id:"w5boss", type:"mastery", title:"Mastery Forge: Quiz System", bossName:"The Logic Warlord", bossEmoji:"⚔️", challenge:`Build a quiz engine:\n- createQuiz(questions)\n- submitAnswer(index, answer) → 'Correct!' or 'Wrong!'\n- getScore() → "X/Y"\n- isComplete() → true when all answered`, starterCode:`function createQuiz(questions) {\n  let answers = new Array(questions.length).fill(null);\n  function submitAnswer(index, answer) {}\n  function getScore() {}\n  function isComplete() {}\n  return { submitAnswer, getScore, isComplete };\n}`, starterCodes:{javascript:`function createQuiz(questions) {\n  let answers = new Array(questions.length).fill(null);\n  function submitAnswer(i, ans) {\n    answers[i] = ans;\n    return ans === questions[i].answer ? "Correct!" : "Wrong!";\n  }\n  function getScore() {\n    let correct = answers.filter((a,i) => a === questions[i].answer).length;\n    return correct + "/" + questions.length;\n  }\n  function isComplete() { return answers.every(a => a !== null); }\n  return { submitAnswer, getScore, isComplete };\n}`, python:``, java:``, cpp:``}, functionName:"createQuiz", testCases:[], testDisplay:[`submitAnswer(0,"4") → "Correct!"`,`submitAnswer(1,"red") → "Wrong!"`,`getScore() → "1/2"`,`isComplete() → true`], validate:(code)=>{ try{ const fn=new Function(`${code}; return createQuiz;`)(); const quiz=fn([{question:"2+2",answer:"4"},{question:"Sky",answer:"blue"}]); if(quiz.submitAnswer(0,"4")!=="Correct!")return false; if(quiz.submitAnswer(1,"red")!=="Wrong!")return false; if(quiz.getScore()!=="1/2")return false; return quiz.isComplete()===true; }catch{return false;} } },
   },
@@ -1085,11 +1647,188 @@ Python:  def add(a, b): return a + b`,
     description:"You've come so far. Now think like a system builder.",
     theme:{primary:"#e879f9",bg:"#1a001a",accent:"#a21caf"}, emoji:"🏛️",
     floors:[
-      { id:"w6f1", floorNum:1, title:"Error Handling", concept:"w6f1", type:"code", lesson:"Real code fails. try/catch handles errors gracefully.", challenge:"Write `safeDivide(a, b)` — returns a/b, throws Error('Cannot divide by zero') if b is 0.", hint:"if (b === 0) throw new Error('Cannot divide by zero')", starterCode:`function safeDivide(a, b) {\n  // throw error if b is 0\n}`, starterCodes:{javascript:`function safeDivide(a, b) {\n  if (b === 0) throw new Error("Cannot divide by zero");\n  return a / b;\n}`, python:`def safe_divide(a, b):\n    if b == 0:\n        raise ValueError("Cannot divide by zero")\n    return a / b`, java:``, cpp:``}, functionName:"safeDivide", testCases:[{label:"10/2",input:[10,2],expected:5}], testDisplay:[`safeDivide(10, 2) → 5`,`safeDivide(5, 0) → throws Error`], validate:(code)=>{ try{ const fn=new Function(`${code}; return safeDivide;`)(); if(fn(10,2)!==5)return false; try{fn(5,0);return false;}catch(e){return e.message==="Cannot divide by zero";} }catch{return false;} } },
-      { id:"w6f2", floorNum:2, title:"OOP: Classes & Objects", concept:"w6f3", type:"code", lesson:"Classes are blueprints. Objects are instances. They bundle data and behavior.", challenge:"Create a `BankAccount` class with deposit(amount), withdraw(amount), getBalance(). Withdrawals can't go below 0.", hint:"constructor sets balance=0. withdraw: only deduct if amount <= balance.", starterCode:`class BankAccount {\n  constructor() {}\n  deposit(amount) {}\n  withdraw(amount) {}\n  getBalance() {}\n}`, starterCodes:{javascript:`class BankAccount {\n  constructor() { this.balance = 0; }\n  deposit(amount) { this.balance += amount; }\n  withdraw(amount) { if (amount <= this.balance) this.balance -= amount; }\n  getBalance() { return this.balance; }\n}`, python:`class BankAccount:\n    def __init__(self):\n        self.balance = 0\n    def deposit(self, amount):\n        self.balance += amount\n    def withdraw(self, amount):\n        if amount <= self.balance:\n            self.balance -= amount\n    def get_balance(self):\n        return self.balance`, java:``, cpp:``}, functionName:"BankAccount", testCases:[], testDisplay:[`deposit(100), withdraw(30) → balance: 70`,`withdraw(200) when balance=70 → balance stays 70`], validate:(code)=>{ try{ const Cls=new Function(`${code}; return BankAccount;`)(); const acc=new Cls(); acc.deposit(100); acc.withdraw(30); if(acc.getBalance()!==70)return false; acc.withdraw(200); return acc.getBalance()===70; }catch{return false;} } },
-      { id:"w6f3", floorNum:3, title:"Inheritance", concept:"w6f4", type:"code", lesson:"A child class inherits everything from parent and can add more.", challenge:"Create `SavingsAccount extends BankAccount` with addInterest(rate) that multiplies balance by (1 + rate/100).", hint:"class SavingsAccount extends BankAccount. addInterest: this.balance *= (1 + rate/100)", starterCode:`class BankAccount {\n  constructor() { this.balance = 0; }\n  deposit(amount) { this.balance += amount; }\n  withdraw(amount) { if (amount <= this.balance) this.balance -= amount; }\n  getBalance() { return this.balance; }\n}\n\nclass SavingsAccount extends BankAccount {\n  addInterest(rate) {\n    // multiply balance by (1 + rate/100)\n  }\n}`, starterCodes:{javascript:`class BankAccount {\n  constructor() { this.balance = 0; }\n  deposit(a) { this.balance += a; }\n  withdraw(a) { if(a<=this.balance) this.balance -= a; }\n  getBalance() { return this.balance; }\n}\nclass SavingsAccount extends BankAccount {\n  addInterest(rate) { this.balance *= (1 + rate/100); }\n}`, python:`class SavingsAccount(BankAccount):\n    def add_interest(self, rate):\n        self.balance *= (1 + rate/100)`, java:``, cpp:``}, functionName:"SavingsAccount", testCases:[], testDisplay:[`deposit(1000), addInterest(10) → balance: 1100`], validate:(code)=>{ try{ const Cls=new Function(`${code}; return SavingsAccount;`)(); const acc=new Cls(); acc.deposit(1000); acc.addInterest(10); return acc.getBalance()===1100; }catch{return false;} } },
-      { id:"w6f4", floorNum:4, title:"Higher Order Functions", concept:"w6f2", type:"code", lesson:"map, filter, reduce — transform arrays without loops.", challenge:"Write `pipeline(arr, ...fns)` that applies each function in sequence to the array.", hint:"Use reduce: fns.reduce((acc, fn) => fn(acc), arr)", starterCode:`function pipeline(arr, ...fns) {\n  // apply fns in sequence\n}`, starterCodes:{javascript:`function pipeline(arr, ...fns) {\n  return fns.reduce((acc, fn) => fn(acc), arr);\n}`, python:`def pipeline(arr, *fns):\n    result = arr\n    for fn in fns:\n        result = fn(result)\n    return result`, java:``, cpp:``}, functionName:"pipeline", testCases:[], testDisplay:[`pipeline([1,2,3,4,5], double, filterEvens) → [2,4,6,8,10]`], validate:(code)=>{ try{ const fn=new Function(`${code}; return pipeline;`)(); const double=a=>a.map(x=>x*2); const filterEvens=a=>a.filter(x=>x%2===0); return JSON.stringify(fn([1,2,3,4,5],double,filterEvens))===JSON.stringify([2,4,6,8,10]); }catch{return false;} } },
-      { id:"w6f5", floorNum:5, title:"Event Emitter (Design Pattern)", concept:"w6f5", type:"code", lesson:"The Observer pattern: objects subscribe to events and react when they fire.", challenge:"Implement EventEmitter with on(event,cb), emit(event,data), off(event,cb).", hint:"Store listeners in object as arrays. emit calls all listeners for that event.", starterCode:`class EventEmitter {\n  constructor() { this.listeners = {}; }\n  on(event, callback) {}\n  emit(event, data) {}\n  off(event, callback) {}\n}`, starterCodes:{javascript:`class EventEmitter {\n  constructor() { this.listeners = {}; }\n  on(e, cb) { if(!this.listeners[e]) this.listeners[e]=[]; this.listeners[e].push(cb); }\n  emit(e, data) { (this.listeners[e]||[]).forEach(cb=>cb(data)); }\n  off(e, cb) { this.listeners[e]=(this.listeners[e]||[]).filter(l=>l!==cb); }\n}`, python:``, java:``, cpp:``}, functionName:"EventEmitter", testCases:[], testDisplay:[`on("test",cb), emit("test","hello") → cb called`,`off("test",cb), emit again → cb NOT called`], validate:(code)=>{ try{ const Cls=new Function(`${code}; return EventEmitter;`)(); const em=new Cls(); let log=[]; const cb=d=>log.push(d); em.on("test",cb); em.emit("test","hello"); em.emit("test","world"); if(log.join(",")!=="hello,world")return false; em.off("test",cb); em.emit("test","ignored"); return log.length===2; }catch{return false;} } },
+      { id:"w6f1", floorNum:1, title:"Error Handling", languages:["javascript","python","java","cpp"], concept:"w6f1", type:"code", lesson:"Real code fails. try/catch handles errors gracefully.", challenge:"Write `safeDivide(a, b)` — returns a/b, throws Error('Cannot divide by zero') if b is 0.", hint:"if (b === 0) throw new Error('Cannot divide by zero')", starterCode:`function safeDivide(a, b) {\n  // throw error if b is 0\n}`, starterCodes:{javascript:`function safeDivide(a, b) {\n  if (b === 0) throw new Error("Cannot divide by zero");\n  return a / b;\n}`, python:`def safe_divide(a, b):\n    if b == 0:\n        raise ValueError("Cannot divide by zero")\n    return a / b`, java:``, cpp:``}, functionName:"safeDivide", testCases:[{label:"10/2",input:[10,2],expected:5}], testDisplay:[`safeDivide(10, 2) → 5`,`safeDivide(5, 0) → throws Error`], validate:(code)=>{ try{ const fn=new Function(`${code}; return safeDivide;`)(); if(fn(10,2)!==5)return false; try{fn(5,0);return false;}catch(e){return e.message==="Cannot divide by zero";} }catch{return false;} } },
+
+      {
+        id: "w6f1b", floorNum: 2, title: "Promises & Async/Await",
+        languages: ["javascript"],
+        concept: "w6f1b", type: "code",
+        lesson: `Real apps fetch data from servers — this takes time. JavaScript uses Promises and async/await to handle this.
+
+A Promise is an object that will resolve (succeed) or reject (fail) in the future.
+
+async function fetchUser(id) {
+  // await pauses until the Promise resolves
+  const data = await getUser(id);
+  return data.name;
+}
+
+async/await makes async code look synchronous — much easier to read than callbacks.`,
+        challenge: `Write an async function \`delay(ms)\` that returns a Promise which resolves after ms milliseconds.
+
+Then write \`runAfterDelay(ms, value)\` that uses delay() and returns value after ms milliseconds.
+
+Hint: use \`new Promise(resolve => setTimeout(resolve, ms))\``,
+        hint: "async function delay(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }",
+        starterCode: `function delay(ms) {\n  // return a Promise that resolves after ms milliseconds\n}\n\nasync function runAfterDelay(ms, value) {\n  // use delay(), then return value\n}`,
+        starterCodes: {
+          javascript: `function delay(ms) {\n  return new Promise(resolve => setTimeout(resolve, ms));\n}\n\nasync function runAfterDelay(ms, value) {\n  await delay(ms);\n  return value;\n}`,
+          python: `import asyncio\n\nasync def delay(ms):\n    await asyncio.sleep(ms / 1000)\n\nasync def run_after_delay(ms, value):\n    await delay(ms)\n    return value`,
+          java: `// Java uses CompletableFuture for async\npublic Object runAfterDelay(int ms, Object value) throws Exception {\n    Thread.sleep(ms);\n    return value;\n}`,
+          cpp: `// C++ uses std::async\n#include<future>\n#include<chrono>\nauto runAfterDelay(int ms, auto value) {\n    std::this_thread::sleep_for(std::chrono::milliseconds(ms));\n    return value;\n}`,
+        },
+        functionName: "runAfterDelay",
+        testCases: [],
+        testDisplay: [
+          `delay(100) → resolves after 100ms`,
+          `await runAfterDelay(50, "hello") → "hello"`,
+        ],
+        validate: (code) => {
+          try {
+            const fn = new Function(`${code}; return runAfterDelay;`)();
+            // Test that it returns a Promise and resolves to the value
+            const result = fn(0, "hello");
+            return result && typeof result.then === "function";
+          } catch { return false; }
+        },
+      },
+      { id:"w6f2", floorNum:3, title:"OOP: Classes & Objects", languages:["javascript","python","java","cpp"], concept:"w6f3", type:"code", lesson:"Classes are blueprints. Objects are instances. They bundle data and behavior.", challenge:"Create a `BankAccount` class with deposit(amount), withdraw(amount), getBalance(). Withdrawals can't go below 0.", hint:"constructor sets balance=0. withdraw: only deduct if amount <= balance.", starterCode:`class BankAccount {\n  constructor() {}\n  deposit(amount) {}\n  withdraw(amount) {}\n  getBalance() {}\n}`, starterCodes:{javascript:`class BankAccount {\n  constructor() { this.balance = 0; }\n  deposit(amount) { this.balance += amount; }\n  withdraw(amount) { if (amount <= this.balance) this.balance -= amount; }\n  getBalance() { return this.balance; }\n}`, python:`class BankAccount:\n    def __init__(self):\n        self.balance = 0\n    def deposit(self, amount):\n        self.balance += amount\n    def withdraw(self, amount):\n        if amount <= self.balance:\n            self.balance -= amount\n    def get_balance(self):\n        return self.balance`, java:``, cpp:``}, functionName:"BankAccount", testCases:[], testDisplay:[`deposit(100), withdraw(30) → balance: 70`,`withdraw(200) when balance=70 → balance stays 70`], validate:(code)=>{ try{ const Cls=new Function(`${code}; return BankAccount;`)(); const acc=new Cls(); acc.deposit(100); acc.withdraw(30); if(acc.getBalance()!==70)return false; acc.withdraw(200); return acc.getBalance()===70; }catch{return false;} } },
+      { id:"w6f3", floorNum:4, title:"Inheritance", languages:["javascript","python","java","cpp"], concept:"w6f4", type:"code", lesson:"A child class inherits everything from parent and can add more.", challenge:"Create `SavingsAccount extends BankAccount` with addInterest(rate) that multiplies balance by (1 + rate/100).", hint:"class SavingsAccount extends BankAccount. addInterest: this.balance *= (1 + rate/100)", starterCode:`class BankAccount {\n  constructor() { this.balance = 0; }\n  deposit(amount) { this.balance += amount; }\n  withdraw(amount) { if (amount <= this.balance) this.balance -= amount; }\n  getBalance() { return this.balance; }\n}\n\nclass SavingsAccount extends BankAccount {\n  addInterest(rate) {\n    // multiply balance by (1 + rate/100)\n  }\n}`, starterCodes:{javascript:`class BankAccount {\n  constructor() { this.balance = 0; }\n  deposit(a) { this.balance += a; }\n  withdraw(a) { if(a<=this.balance) this.balance -= a; }\n  getBalance() { return this.balance; }\n}\nclass SavingsAccount extends BankAccount {\n  addInterest(rate) { this.balance *= (1 + rate/100); }\n}`, python:`class SavingsAccount(BankAccount):\n    def add_interest(self, rate):\n        self.balance *= (1 + rate/100)`, java:``, cpp:``}, functionName:"SavingsAccount", testCases:[], testDisplay:[`deposit(1000), addInterest(10) → balance: 1100`], validate:(code)=>{ try{ const Cls=new Function(`${code}; return SavingsAccount;`)(); const acc=new Cls(); acc.deposit(1000); acc.addInterest(10); return acc.getBalance()===1100; }catch{return false;} } },
+      { id:"w6f4", floorNum:5, title:"Higher Order Functions", languages:["javascript","python","java","cpp"], concept:"w6f2", type:"code", lesson:"map, filter, reduce — transform arrays without loops.", challenge:"Write `pipeline(arr, ...fns)` that applies each function in sequence to the array.", hint:"Use reduce: fns.reduce((acc, fn) => fn(acc), arr)", starterCode:`function pipeline(arr, ...fns) {\n  // apply fns in sequence\n}`, starterCodes:{javascript:`function pipeline(arr, ...fns) {\n  return fns.reduce((acc, fn) => fn(acc), arr);\n}`, python:`def pipeline(arr, *fns):\n    result = arr\n    for fn in fns:\n        result = fn(result)\n    return result`, java:``, cpp:``}, functionName:"pipeline", testCases:[], testDisplay:[`pipeline([1,2,3,4,5], double, filterEvens) → [2,4,6,8,10]`], validate:(code)=>{ try{ const fn=new Function(`${code}; return pipeline;`)(); const double=a=>a.map(x=>x*2); const filterEvens=a=>a.filter(x=>x%2===0); return JSON.stringify(fn([1,2,3,4,5],double,filterEvens))===JSON.stringify([2,4,6,8,10]); }catch{return false;} } },
+      { id:"w6f5", floorNum:6, title:"Event Emitter (Design Pattern)", languages:["javascript","python","java","cpp"], concept:"w6f5", type:"code", lesson:"The Observer pattern: objects subscribe to events and react when they fire.", challenge:"Implement EventEmitter with on(event,cb), emit(event,data), off(event,cb).", hint:"Store listeners in object as arrays. emit calls all listeners for that event.", starterCode:`class EventEmitter {\n  constructor() { this.listeners = {}; }\n  on(event, callback) {}\n  emit(event, data) {}\n  off(event, callback) {}\n}`, starterCodes:{javascript:`class EventEmitter {\n  constructor() { this.listeners = {}; }\n  on(e, cb) { if(!this.listeners[e]) this.listeners[e]=[]; this.listeners[e].push(cb); }\n  emit(e, data) { (this.listeners[e]||[]).forEach(cb=>cb(data)); }\n  off(e, cb) { this.listeners[e]=(this.listeners[e]||[]).filter(l=>l!==cb); }\n}`, python:``, java:``, cpp:``}, functionName:"EventEmitter", testCases:[], testDisplay:[`on("test",cb), emit("test","hello") → cb called`,`off("test",cb), emit again → cb NOT called`], validate:(code)=>{ try{ const Cls=new Function(`${code}; return EventEmitter;`)(); const em=new Cls(); let log=[]; const cb=d=>log.push(d); em.on("test",cb); em.emit("test","hello"); em.emit("test","world"); if(log.join(",")!=="hello,world")return false; em.off("test",cb); em.emit("test","ignored"); return log.length===2; }catch{return false;} } },
+      // ── Python-only: Decorators ───────────────────────────────────────────
+      {
+        id: "w6_py1",
+        languages: ["python"],
+        floorNum: 99, title: "Decorators",
+        concept: "w6_py1", type: "code",
+        lesson: `A decorator is a function that wraps another function to add behaviour.
+
+def shout(func):           # decorator
+    def wrapper(*args):
+        result = func(*args)
+        return result.upper()
+    return wrapper
+
+@shout
+def greet(name):
+    return "hello " + name
+
+greet("world")  → "HELLO WORLD"
+
+Decorators are used for logging, timing, auth checks, caching, and more.`,
+        challenge: `Write two decorators:
+
+1. @timer — prints how long a function takes to run
+   (use time.time() before and after)
+
+2. @memoize — caches results so repeated calls with same args are instant
+   (use a dict as cache)
+
+Then apply @memoize to a slow fibonacci function to make it fast.`,
+        hint: "def memoize(func): cache = {}; def wrapper(*args): if args not in cache: cache[args] = func(*args); return cache[args]",
+        starterCode: `import time\n\ndef timer(func):\n    # wrap func, print elapsed time\n    pass\n\ndef memoize(func):\n    # cache results by args\n    pass\n\n@memoize\ndef fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)`,
+        starterCodes: {
+          python: `import time\n\ndef timer(func):\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        print(f"{func.__name__} took {time.time()-start:.4f}s")\n        return result\n    return wrapper\n\ndef memoize(func):\n    cache = {}\n    def wrapper(*args):\n        if args not in cache:\n            cache[args] = func(*args)\n        return cache[args]\n    return wrapper\n\n@memoize\ndef fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)`,
+          javascript: ``, java: ``, cpp: ``
+        },
+        functionName: "fib",
+        testCases: [],
+        testDisplay: [
+          `fib(30) should run instantly with @memoize`,
+          `@timer should print elapsed time`
+        ],
+        validate: (code) => {
+          return code.includes("def timer") && code.includes("def memoize") && 
+                 code.includes("cache") && code.includes("@memoize");
+        },
+      },
+
+      // ── Java-only: Generics ───────────────────────────────────────────────
+      {
+        id: "w6_java1",
+        languages: ["java"],
+        floorNum: 99, title: "Generics",
+        concept: "w6_java1", type: "code",
+        lesson: `Generics let you write code that works for ANY type while keeping type safety.
+
+// Without generics — only works for int:
+int findMax(int[] arr) { ... }
+
+// With generics — works for any Comparable type:
+<T extends Comparable<T>> T findMax(T[] arr) { ... }
+
+findMax(new Integer[]{3,1,4,1,5});  // 5
+findMax(new String[]{"b","a","c"});  // "c"`,
+        challenge: `Write a generic Pair<A, B> class that:
+- Holds two values of potentially different types
+- getFirst() → returns first value
+- getSecond() → returns second value  
+- swap() → returns new Pair<B,A> with values swapped
+
+Pair<String, Integer> p = new Pair<>("hello", 42);
+p.getFirst()  → "hello"
+p.getSecond() → 42
+p.swap().getFirst() → 42`,
+        hint: "class Pair<A, B> { A first; B second; ... Pair<B,A> swap() { return new Pair<>(second, first); } }",
+        starterCode: `public class Pair<A, B> {\n    // store first and second\n    public Pair(A first, B second) {\n    }\n    public A getFirst() {\n    }\n    public B getSecond() {\n    }\n    public Pair<B, A> swap() {\n    }\n}`,
+        starterCodes: {
+          java: `public class Pair<A, B> {\n    private A first; private B second;\n    public Pair(A first, B second) { this.first=first; this.second=second; }\n    public A getFirst() { return first; }\n    public B getSecond() { return second; }\n    public Pair<B,A> swap() { return new Pair<>(second, first); }\n}`,
+          javascript: ``, python: ``, cpp: ``
+        },
+        functionName: "Pair",
+        testCases: [],
+        testDisplay: [
+          `new Pair<>("hello", 42).getFirst() → "hello"`,
+          `new Pair<>("hello", 42).swap().getFirst() → 42`
+        ],
+        validate: (code) => {
+          return code.includes("class Pair") && code.includes("getFirst") && code.includes("swap");
+        },
+      },
+
+      // ── C++-only: Memory Management ───────────────────────────────────────
+      {
+        id: "w6_cpp1",
+        languages: ["cpp"],
+        floorNum: 99, title: "Memory Management",
+        concept: "w6_cpp1", type: "code",
+        lesson: `In C++ you control memory manually with new and delete.
+
+int* p = new int(42);   // allocate on heap
+cout << *p;              // 42
+delete p;                // free memory — MUST do this!
+
+int* arr = new int[5];   // dynamic array
+arr[0] = 10;
+delete[] arr;            // free array with delete[]
+
+Smart pointers (C++11) manage this automatically:
+unique_ptr<int> sp = make_unique<int>(42);
+// auto-deleted when sp goes out of scope`,
+        challenge: `Write a DynamicArray class that:
+- constructor(int capacity) — allocates array with new
+- push(int val) — adds value (double capacity if full)
+- get(int index) → returns element
+- size() → returns current count
+- destructor — deletes the array with delete[]`,
+        hint: "int* data = new int[capacity]; in constructor. ~DynamicArray() { delete[] data; }",
+        starterCode: `class DynamicArray {\n    int* data;\n    int capacity;\n    int count;\npublic:\n    DynamicArray(int cap) {\n        // allocate with new\n    }\n    void push(int val) {\n        // add val, double capacity if full\n    }\n    int get(int index) {\n    }\n    int size() {\n    }\n    ~DynamicArray() {\n        // delete[] data\n    }\n};`,
+        starterCodes: {
+          cpp: `class DynamicArray {\n    int* data; int capacity; int count=0;\npublic:\n    DynamicArray(int cap): capacity(cap) { data=new int[cap]; }\n    void push(int val) {\n        if(count==capacity){\n            int* nd=new int[capacity*2];\n            for(int i=0;i<count;i++) nd[i]=data[i];\n            delete[] data; data=nd; capacity*=2;\n        }\n        data[count++]=val;\n    }\n    int get(int i){ return data[i]; }\n    int size(){ return count; }\n    ~DynamicArray(){ delete[] data; }\n};`,
+          javascript: ``, python: ``, java: ``
+        },
+        functionName: "DynamicArray",
+        testCases: [],
+        testDisplay: [
+          `DynamicArray d(2); d.push(10); d.push(20); d.push(30);`,
+          `d.get(0) → 10, d.size() → 3`
+        ],
+        validate: (code) => {
+          return code.includes("new int") && code.includes("delete[]") && 
+                 code.includes("DynamicArray") && code.includes("push");
+        },
+      },
     ],
     boss:{ id:"w6boss", type:"mastery", title:"🏆 FINAL Mastery Forge: Inventory System", bossName:"VOID — The Architect of Betrayal", bossEmoji:"👁️", challenge:`Build a complete Inventory class:\n- addItem(name, quantity, price)\n- removeItem(name) → true/false\n- updateQuantity(name, qty)\n- getTotalValue() → sum of qty*price\n- getLowStock(threshold) → names below threshold`, starterCode:`class Inventory {\n  constructor() { this.items = {}; }\n  addItem(name, quantity, price) {}\n  removeItem(name) {}\n  updateQuantity(name, qty) {}\n  getTotalValue() {}\n  getLowStock(threshold) {}\n}`, starterCodes:{javascript:`class Inventory {\n  constructor() { this.items = {}; }\n  addItem(n,q,p) { this.items[n]={quantity:q,price:p}; }\n  removeItem(n) { if(!this.items[n])return false; delete this.items[n]; return true; }\n  updateQuantity(n,q) { if(this.items[n]) this.items[n].quantity=q; }\n  getTotalValue() { return Object.values(this.items).reduce((s,i)=>s+i.quantity*i.price,0); }\n  getLowStock(t) { return Object.keys(this.items).filter(n=>this.items[n].quantity<t); }\n}`, python:``, java:``, cpp:``}, functionName:"Inventory", testCases:[], testDisplay:[`addItem("sword",5,100), addItem("shield",2,150), addItem("potion",20,10)`,`getTotalValue() → 1000`,`getLowStock(5) includes "shield"`,`removeItem("potion") → true`], validate:(code)=>{ try{ const Cls=new Function(`${code}; return Inventory;`)(); const inv=new Cls(); inv.addItem("sword",5,100); inv.addItem("shield",2,150); inv.addItem("potion",20,10); if(inv.getTotalValue()!==1000)return false; const low=inv.getLowStock(5); if(!low.includes("shield"))return false; inv.updateQuantity("sword",10); if(inv.removeItem("potion")!==true)return false; if(inv.removeItem("dragon")!==false)return false; return inv.getTotalValue()===1300; }catch{return false;} } },
   },
