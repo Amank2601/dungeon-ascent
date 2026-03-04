@@ -13,14 +13,35 @@ const router       = express.Router();
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // In-memory stores
-const otpStore          = new Map(); // signup OTPs
-const resetStore        = new Map(); // password reset OTPs
+const otpStore   = new Map(); // signup OTPs
+const resetStore = new Map(); // password reset OTPs
 
 function signToken(id) {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
 function makeOTP() {
   return crypto.randomInt(100000, 999999).toString();
+}
+
+// ─── Reusable input validators ────────────────────────────────────────────────
+function validateUsername(username) {
+  if (!username || typeof username !== "string") return "Username is required.";
+  const t = username.trim();
+  if (t.length < 3 || t.length > 20) return "Username must be 3-20 characters.";
+  if (!/^[a-zA-Z0-9_]+$/.test(t)) return "Username: letters, numbers, underscores only.";
+  return null;
+}
+function validateEmail(email) {
+  if (!email || typeof email !== "string") return "Email is required.";
+  if (email.length > 100) return "Email too long.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Invalid email format.";
+  return null;
+}
+function validatePassword(password) {
+  if (!password || typeof password !== "string") return "Password is required.";
+  if (password.length < 6)   return "Password must be at least 6 characters.";
+  if (password.length > 100) return "Password too long.";
+  return null;
 }
 
 // ─── POST /api/auth/google ────────────────────────────────────────────────────
@@ -50,10 +71,11 @@ router.post("/google", async (req, res) => {
       return res.json({ needsUsername: true, suggestedUsername: suggested, email: normalEmail });
     }
 
+    // Validate username from Google flow
+    const usernameErr = validateUsername(username);
+    if (usernameErr) return res.status(400).json({ error: usernameErr });
+
     const trimmed = username.trim();
-    if (trimmed.length < 3)  return res.status(400).json({ error: "Username too short." });
-    if (trimmed.length > 20) return res.status(400).json({ error: "Username too long." });
-    if (!/^[a-zA-Z0-9_]+$/.test(trimmed)) return res.status(400).json({ error: "Letters, numbers, underscores only." });
     if (await User.findOne({ username: trimmed })) return res.status(409).json({ error: "Username taken. Pick another." });
 
     user = await User.create({
@@ -74,14 +96,13 @@ router.post("/google", async (req, res) => {
 router.post("/send-otp", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    if (!username || !email || !password)
-      return res.status(400).json({ error: "All fields are required." });
-    if (username.trim().length < 3)
-      return res.status(400).json({ error: "Username must be at least 3 characters." });
-    if (password.length < 6)
-      return res.status(400).json({ error: "Password must be at least 6 characters." });
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      return res.status(400).json({ error: "Invalid email format." });
+
+    const usernameErr = validateUsername(username);
+    if (usernameErr) return res.status(400).json({ error: usernameErr });
+    const emailErr = validateEmail(email);
+    if (emailErr) return res.status(400).json({ error: emailErr });
+    const passwordErr = validatePassword(password);
+    if (passwordErr) return res.status(400).json({ error: passwordErr });
 
     const normalEmail = email.toLowerCase().trim();
     const existing = await User.findOne({ $or: [{ email: normalEmail }, { username: username.trim() }] });
@@ -119,6 +140,7 @@ router.post("/verify-otp", async (req, res) => {
   try {
     const { email, otp } = req.body;
     if (!email || !otp) return res.status(400).json({ error: "Email and code required." });
+    if (typeof otp !== "string" || otp.length > 6) return res.status(400).json({ error: "Invalid code." });
 
     const normalEmail = email.toLowerCase().trim();
     const record = otpStore.get(normalEmail);
@@ -156,7 +178,8 @@ router.post("/verify-otp", async (req, res) => {
 router.post("/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
-    if (!email) return res.status(400).json({ error: "Email is required." });
+    const emailErr = validateEmail(email);
+    if (emailErr) return res.status(400).json({ error: emailErr });
 
     const normalEmail = email.toLowerCase().trim();
     const user = await User.findOne({ email: normalEmail });
@@ -194,8 +217,13 @@ router.post("/reset-password", async (req, res) => {
     const { email, otp, newPassword } = req.body;
     if (!email || !otp || !newPassword)
       return res.status(400).json({ error: "All fields required." });
-    if (newPassword.length < 6)
-      return res.status(400).json({ error: "Password must be at least 6 characters." });
+
+    const emailErr = validateEmail(email);
+    if (emailErr) return res.status(400).json({ error: emailErr });
+    const passwordErr = validatePassword(newPassword);
+    if (passwordErr) return res.status(400).json({ error: passwordErr });
+    if (typeof otp !== "string" || otp.length > 6)
+      return res.status(400).json({ error: "Invalid code." });
 
     const normalEmail = email.toLowerCase().trim();
     const record = resetStore.get(normalEmail);
@@ -233,7 +261,11 @@ router.post("/reset-password", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ error: "Email and password required." });
+
+    const emailErr = validateEmail(email);
+    if (emailErr) return res.status(400).json({ error: emailErr });
+    const passwordErr = validatePassword(password);
+    if (passwordErr) return res.status(400).json({ error: passwordErr });
 
     const user = await User.findOne({ email: email.toLowerCase().trim() }).select("+password");
     if (user && user.authProvider === "google")

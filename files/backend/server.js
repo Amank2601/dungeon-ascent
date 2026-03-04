@@ -2,23 +2,28 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
-const authRoutes     = require("./routes/auth");
-const progressRoutes = require("./routes/progress");
+const authRoutes        = require("./routes/auth");
+const progressRoutes    = require("./routes/progress");
 const pistonRoutes      = require("./routes/piston");
 const leaderboardRoutes = require("./routes/leaderboard");
 const dailyRoutes       = require("./routes/daily");
 
 const app = express();
 
+// ─── Security Headers (Helmet) ────────────────────────────────────────────────
+app.use(helmet());
+
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 const allowedOrigins = [
-  process.env.CLIENT_URL || "http://localhost:3000",
-  "http://localhost:3001",
+  process.env.FRONTEND_URL,         // production Vercel URL
   "http://localhost:3000",
-];
+  "http://localhost:3001",
+].filter(Boolean); // removes undefined if FRONTEND_URL not set yet
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) callback(null, true);
@@ -30,25 +35,35 @@ app.use(cors({
 app.use(express.json({ limit: "1mb" }));
 
 // ─── Rate Limiting ────────────────────────────────────────────────────────────
+// General limiter for all /api routes
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
+  windowMs: 15 * 60 * 1000, // 15 minutes
   max: 200,
   message: { error: "Too many requests, slow down." },
 });
 app.use("/api", limiter);
 
-// Stricter limit for auth (prevent brute force)
+// Strict limiter for login/register (brute force protection)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
   message: { error: "Too many login attempts. Try again in 15 minutes." },
 });
-app.use("/api/auth/login", authLimiter);
+app.use("/api/auth/login",    authLimiter);
 app.use("/api/auth/register", authLimiter);
 
-// ─── Routes ──────────────────────────────────────────────────────────────────
-app.use("/api/auth",     authRoutes);
-app.use("/api/progress", progressRoutes);
+// Very strict limiter for OTP (prevent Gmail quota abuse)
+const otpLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5, // max 5 OTP requests per hour per IP
+  message: { error: "Too many OTP requests. Try again in 1 hour." },
+});
+app.use("/api/auth/send-otp",        otpLimiter);
+app.use("/api/auth/forgot-password", otpLimiter);
+
+// ─── Routes ───────────────────────────────────────────────────────────────────
+app.use("/api/auth",        authRoutes);
+app.use("/api/progress",    progressRoutes);
 app.use("/api/piston",      pistonRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/daily",       dailyRoutes);
@@ -63,12 +78,15 @@ app.get("/api/health", (req, res) => {
 });
 
 // ─── Global Error Handler ─────────────────────────────────────────────────────
+// Never expose internal error details to the client
 app.use((err, req, res, next) => {
-  console.error("Unhandled error:", err.message);
-  res.status(err.status || 500).json({ error: err.message || "Internal server error" });
+  console.error("Unhandled error:", err.message); // logs full error on server
+  res.status(err.status || 500).json({
+    error: err.status ? err.message : "Something went wrong. Please try again."
+  });
 });
 
-// ─── Connect MongoDB Atlas + Start ───────────────────────────────────────────
+// ─── Connect MongoDB Atlas + Start ────────────────────────────────────────────
 mongoose
   .connect(process.env.MONGO_URI, {
     serverSelectionTimeoutMS: 10000,

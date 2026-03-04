@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { AuthProvider, useAuth, apiFetch } from "./context/AuthContext";
 import { AuthGate } from "./components/AuthScreens";
-import { StoryIntro } from "./components/StoryIntro";
+import { StoryIntro } from './components/StoryIntro';
 import { BattleScreen } from "./components/BattleScreen";
 import { Leaderboard } from "./components/Leaderboard";
 import { DailyChallenge } from "./components/DailyChallenge";
@@ -76,7 +76,7 @@ const markBoss = (p, wid) => {
 };
 
 // ─── TOP BAR ──────────────────────────────────────────────────────────────────
-function TopBar({ progress, onMap, onLeaderboard, onDaily, user }) {
+function TopBar({ progress, onMap, onLeaderboard, onDaily, user, onLogout }) {
   const { logout } = useAuth();
   const lvl = getLevel(progress.totalXP || 0);
   return (
@@ -106,7 +106,7 @@ function TopBar({ progress, onMap, onLeaderboard, onDaily, user }) {
       </div>
       <div style={ui.topRight}>
         <span style={ui.username}>🧙 {user?.username}</span>
-        <button style={ui.logoutBtn} onClick={logout}>Logout</button>
+        <button style={ui.logoutBtn} onClick={() => { onLogout(); logout(); }}>Logout</button>
       </div>
     </div>
   );
@@ -189,7 +189,6 @@ function FloorMap({ world, progress, onSelectFloor, onBack, selectedLanguage = "
   const wp = progress.worlds?.[world.id] || {};
   const done = wp.completedFloors || [];
   const bossDefeated = wp.bossDefeated || false;
-  // Filter floors to only show those available for selected language
   const visibleFloors = world.floors.filter(f => !f.languages || f.languages.includes(selectedLanguage));
   const allDone = visibleFloors.every(f => done.includes(f.id));
   const monsterList = MONSTERS[world.id] || [];
@@ -342,7 +341,7 @@ function FinalVictory({ user, progress, onRestart }) {
 // ─── MAIN GAME LOGIC ──────────────────────────────────────────────────────────
 function Game() {
   const { user } = useAuth();
-  const [scene, setScene] = useState("intro"); // intro|worldmap|floormap|battle|betrayer|victory|leaderboard|daily
+  const [scene, setScene] = useState("intro");
   const [progress, setProgress] = useState(initProgress);
   const [selectedWorld, setSelectedWorld] = useState(null);
   const [selectedFloor, setSelectedFloor] = useState(null);
@@ -350,12 +349,10 @@ function Game() {
   const [isBossFight, setIsBossFight] = useState(false);
   const [showBetrayerReveal, setShowBetrayerReveal] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(() => {
-    // persist language choice
     return localStorage.getItem("dungeon_language") || "javascript";
   });
   const handleLanguageChange = (lang) => {
     setSelectedLanguage(lang);
-    // Persist language with progress
     const updated = { ...progress, selectedLanguage: lang };
     saveProgress(updated);
   };
@@ -369,16 +366,13 @@ function Game() {
     apiFetch("/progress")
       .then((data) => {
         const p = data.progress || initProgress();
-        // Guard: ensure worlds always exists
         if (!p.worlds) p.worlds = {};
         setProgress(p);
         if (p.introDone) setScene("worldmap");
-        // sync selected language
         if (p.selectedLanguage) setSelectedLanguage(p.selectedLanguage);
       })
       .catch((err) => {
         console.warn("Could not load progress from server:", err.message);
-        // Fallback to localStorage if server unreachable
         try {
           const saved = localStorage.getItem(`dungeon_progress_${user.id}`);
           if (saved) {
@@ -391,14 +385,12 @@ function Game() {
       .finally(() => setProgressLoading(false));
   }, [user]);
 
-  // Save progress to MongoDB (+ localStorage as offline backup)
+  // Save progress to MongoDB
   const saveProgress = (p) => {
     setProgress(p);
-    // Optimistic local backup
     try {
       localStorage.setItem(`dungeon_progress_${user.id}`, JSON.stringify(p));
     } catch {}
-    // Save to MongoDB
     apiFetch("/progress", {
       method: "POST",
       body: JSON.stringify({ progress: p }),
@@ -438,7 +430,6 @@ function Game() {
   };
 
   const handleBattleDefeat = () => {
-    // Just retry — lives already reset in BattleScreen
     setScene("battle");
   };
 
@@ -452,16 +443,31 @@ function Game() {
     }
   };
 
+  // ── Logout handler: reset scene before logging out ──
+  const handleLogout = () => {
+    setScene("intro");
+    setProgress(initProgress());
+    setSelectedWorld(null);
+    setSelectedFloor(null);
+    setSelectedMonster(null);
+  };
+
   return (
     <div style={ui.root}>
       <GlobalStyles />
 
       {scene !== "intro" && (
-        <TopBar progress={progress} onMap={() => setScene("worldmap")} onLeaderboard={() => setScene("leaderboard")} onDaily={() => setScene("daily")} user={user} />
+        <TopBar
+          progress={progress}
+          onMap={() => setScene("worldmap")}
+          onLeaderboard={() => setScene("leaderboard")}
+          onDaily={() => setScene("daily")}
+          user={user}
+          onLogout={handleLogout}
+        />
       )}
 
       <div style={ui.content}>
-        {/* Show loading while fetching progress from MongoDB */}
         {progressLoading && (
           <div style={{ color:"#444", fontSize:"0.9rem", marginTop:"5rem", textAlign:"center", animation:"fadeUp 0.4s" }}>
             <div style={{ fontSize:"3rem", marginBottom:"1rem", animation:"pulse 1.5s infinite" }}>⚔️</div>
@@ -518,9 +524,7 @@ function Game() {
             user={user}
             progress={progress}
             onRestart={() => {
-              // Reset on server + locally
-              apiFetch("/progress", { method: "DELETE" })
-                .catch(() => {});
+              apiFetch("/progress", { method: "DELETE" }).catch(() => {});
               const fresh = initProgress();
               saveProgress(fresh);
               setScene("intro");

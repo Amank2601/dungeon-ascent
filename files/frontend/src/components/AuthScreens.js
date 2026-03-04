@@ -11,6 +11,13 @@ export function AuthGate({ children }) {
   const { user, loading } = useAuth();
   const [screen, setScreen] = useState("main");
   const [pending, setPending] = useState(null);
+  // Reset to login screen whenever user logs out
+  useEffect(() => {
+    if (!user && !loading) {
+      setScreen("main");
+      setPending(null);
+    }
+  }, [user, loading]);
 
   if (loading) return <LoadingScreen />;
   if (!user) return (
